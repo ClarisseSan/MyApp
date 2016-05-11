@@ -1,13 +1,19 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="com.gerry.myapp.MainActivityFragment"
     tools:showIn="@layout/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorDark"
     >
-
 
     <TextView
         android:layout_width="match_parent"
@@ -26,13 +32,9 @@
 
     <Button
         android:id="@+id/btn_movie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/CustomButtonStyle"
         android:text="@string/pop_movies"
-        android:onClick="sendMessage"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/colorB1"
-        android:textColor="@color/colorWhite"/>
+        android:background="@color/colorB1"/>
 
     <Button
         android:id="@+id/btn_stock"
@@ -46,46 +48,33 @@
 
     <Button
         android:id="@+id/btn_build"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/build_it"
-        android:onClick="sendMessage"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/colorB3"
-        android:textColor="@color/colorWhite"/>
+        style="@style/CustomButtonStyle"
+        android:background="@color/colorB3"/>
 
 
 
     <Button
         android:id="@+id/btn_make"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/make_app"
-        android:onClick="sendMessage"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/colorB4"
-        android:textColor="@color/colorWhite"/>
+        style="@style/CustomButtonStyle"
+        android:background="@color/colorB4"/>
 
 
     <Button
         android:id="@+id/btn_go"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/go_ubi"
-        android:onClick="sendMessage"
-        style="?android:attr/borderlessButtonStyle"
         android:background="@color/colorB5"
-        android:textColor="@color/colorWhite"/>
+        style="@style/CustomButtonStyle"/>
+
 
 
     <Button
         android:id="@+id/btn_capstone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="@string/capstone"
-        android:onClick="sendMessage"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@color/colorB6"
-        android:textColor="@color/colorWhite"/>
+        style="@style/CustomButtonStyle"
+        android:background="@color/colorB6" />
 
-</LinearLayout>
+   </LinearLayout>
+
+</ScrollView>
