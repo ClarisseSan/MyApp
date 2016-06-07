@@ -1,22 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gerry.myapp">
+    package="com.gerry.myapp" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".movies.PopularMoviesActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/pop_movies"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gerry.myapp.MainActivity" />
+        </activity>
+        <activity
+            android:name=".movies.SettingsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".movies.PopularMoviesActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".movies.MovieDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_movie_detail"
+            android:parentActivityName=".movies.PopularMoviesActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gerry.myapp.movies.PopularMoviesActivity" />
+        </activity>
+        <activity
+            android:name=".movies.FavorActivity"
+            android:label="@string/title_activity_favor"
+            android:parentActivityName=".movies.PopularMoviesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gerry.myapp.movies.PopularMoviesActivity" />
+        </activity>
+        <activity
+            android:name=".movies.TrailerExampleActivity"
+            android:label="@string/title_activity_trailer_example"
+            android:parentActivityName=".movies.MovieDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gerry.myapp.movies.MovieDetailActivity" />
         </activity>
     </application>
 

@@ -1,5 +1,6 @@
 package com.gerry.myapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.gerry.myapp.movies.PopularMoviesActivity;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,6 +40,9 @@ public class MainActivityFragment extends Fragment {
                 //display in short period of time
                 Toast.makeText(getActivity(), "This button will launch my Popular Movies app!",
                         Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), PopularMoviesActivity.class);
+                startActivity(intent);
+
             }
         });
 
