@@ -224,7 +224,7 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
+        final String api_key = "?api_key=";
         String id = movieId;
 
 
@@ -393,15 +393,14 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
     private void requestMovieReviews(String movieId){
-        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
+        final String api_key = "?api_key=";
         String id = movieId;
         final String vid = "/reviews";
         final String reviews_url = BASE_PATH + id + vid + api_key;
 
-        Log.d("TRAILER URL--------> ", reviews_url);
+        Log.d("TRAILER URL---------> ", reviews_url);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());

@@ -178,7 +178,8 @@ public class PopularMoviesActivityFragment extends Fragment {
                     e.printStackTrace();
                     Log.e("ERROR", e.getMessage());
                 }
-                   }
+                //URL for fetching all movies
+                 }
         }).execute(BASE_PATH + sortOption + api_key);
     }
 

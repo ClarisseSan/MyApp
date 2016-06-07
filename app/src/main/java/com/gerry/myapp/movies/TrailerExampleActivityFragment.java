@@ -67,7 +67,7 @@ public class TrailerExampleActivityFragment extends Fragment {
     }
 
     private void requestMovieTrailer(String movieId){
-        movieTrailersList = new ArrayList<>();
+       movieTrailersList = new ArrayList<>();
 
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";

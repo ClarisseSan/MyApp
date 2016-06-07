@@ -98,17 +98,16 @@ public class FavorActivityFragment extends Fragment {
     }
 
     private void requestMovieTrailer(String movieId){
-        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
         movieTrailersList = new ArrayList<>();
 
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
+        final String api_key = "?api_key=";
         String id = movieId;
         final String vid = "/videos";
         String trailer_url = BASE_PATH + id + vid + api_key;
 
-        Log.d("TRAILER URL------------> ", trailer_url);
+        Log.d("TRAILER URL----------> ", trailer_url);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
