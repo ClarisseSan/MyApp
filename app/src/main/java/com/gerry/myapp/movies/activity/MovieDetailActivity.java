@@ -96,23 +96,20 @@ public class MovieDetailActivity extends AppCompatActivity {
         String json = preferences.getString("favorites", null);
 
         // Convert the json string into JSONArray
+        ArrayList<String> list = new ArrayList<String>();
         JSONArray lines = new JSONArray(json);
         for (int i = 0; i < lines.length(); i++) {
             // This is one order line on the preferences
             JSONObject line = lines.getJSONObject(i);
 
-
             System.out.println("THIS IS A LINE---> " + line);
 
             String id = line.getString("movie_id");
-            if(id.equals(movieId)){
-                //TODO: remove movieeID from favorites
-                System.out.println("remove ID");
-
-
+            if(!id.equals(movieId)){
+                blank.put(line);
             }
-
         }
+
 
         // At this point, the blank array only contains the order lines we wanted.
 
