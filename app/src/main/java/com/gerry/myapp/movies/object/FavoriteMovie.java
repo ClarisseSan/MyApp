@@ -3,16 +3,16 @@ package com.gerry.myapp.movies.object;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by gerry on 27/5/16.
  */
 public class FavoriteMovie extends Movie implements Parcelable {
 
-  // List<Trailer> trailerList;
 
-    public FavoriteMovie(long movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String duration) {
-        super(movie_id, movie_name, movie_image, movie_overview, movie_date, movie_vote, duration);
-    //this.trailerList = trailerList;
+    public FavoriteMovie(long movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String duration, List<Trailer> trailerList) {
+        super(movie_id, movie_name, movie_image, movie_overview, movie_date, movie_vote, duration, trailerList);
     }
 
     protected FavoriteMovie(Parcel in) {

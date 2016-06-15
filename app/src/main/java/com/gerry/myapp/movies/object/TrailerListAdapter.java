@@ -1,4 +1,4 @@
-package com.gerry.myapp.movies;
+package com.gerry.myapp.movies.object;
 
 import android.content.Context;
 import android.view.LayoutInflater;

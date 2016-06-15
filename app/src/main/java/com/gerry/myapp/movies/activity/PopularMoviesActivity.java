@@ -1,4 +1,4 @@
-package com.gerry.myapp.movies;
+package com.gerry.myapp.movies.activity;
 
 import android.content.Intent;
 import android.os.Bundle;

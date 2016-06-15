@@ -23,7 +23,13 @@
     <string name="favorite">fav</string>
     <string name="fav">Favorites</string>
     <string name="title_activity_favorites">Favorites</string>
-    <string name="title_activity_favor">FavorActivity</string>
+    <string name="title_activity_favor">Favorites</string>
     <string name="title_activity_trailer_example">TrailerExampleActivity</string>
+    <string name="title_activity_movie_main">MovieMainActivity</string>
+
+    <string name="no_reviews">"NO REVIEWS AVAILABLE."</string>
+    <string name="no_connection">"No network connection", "This application requires an internet connection."</string>
+
+
 
 </resources>

@@ -1,4 +1,4 @@
-package com.gerry.myapp.movies;
+package com.gerry.myapp.movies.fragment;
 
 
 import android.content.Context;
@@ -33,6 +33,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.gerry.myapp.R;
+import com.gerry.myapp.movies.activity.TrailerExampleActivity;
 import com.gerry.myapp.movies.object.Movie;
 import com.gerry.myapp.movies.object.Trailer;
 import com.gerry.myapp.movies.object.TrailerAdapter;
@@ -51,9 +52,10 @@ public class MovieDetailActivityFragment extends Fragment {
 
     //variables for sharing
     private static final String LOG_TAG = "MovieDetailActivityFragment.class";
-    private String mMovieString = "MOVIE TEST";
+
     private String movieId;
     private ArrayList<Movie> list;
+
 
     private String mTitle;
     private String mYear;
@@ -61,7 +63,7 @@ public class MovieDetailActivityFragment extends Fragment {
     private String mRating;
     private String mOverview;
     private String mPoster;
-
+    private String first_trailer_url = "";
 
     private TextView txtTitle;
     private TextView txtYear;
@@ -74,7 +76,11 @@ public class MovieDetailActivityFragment extends Fragment {
     private TrailerAdapter trailerListAdapter;
     private RecyclerView recyclerView;
 
+
+
     private int flagDataType; //if from api or local data
+    //flagDataType = 0 --> from popular movies Activty
+    //flagDataType = 1 --> from favorites activity
     private Intent intent;
 
 
@@ -104,6 +110,7 @@ public class MovieDetailActivityFragment extends Fragment {
             // requestMovieReviews(movieId);
         }
 
+
     }
 
     private void getLocalData() {
@@ -113,8 +120,16 @@ public class MovieDetailActivityFragment extends Fragment {
         mDuration = intent.getStringExtra("duration");
         mRating = intent.getStringExtra("rating");
         mOverview = intent.getStringExtra("overview");
-        mPoster = intent.getStringExtra("poster");
+        mPoster = intent.getStringExtra("poster" +
+                "");
 
+
+        movieTrailersList = new ArrayList<>();
+        List<Trailer> trailers = intent.getParcelableArrayListExtra("trailers");
+
+        for (Trailer t:trailers) {
+            System.out.println("TRAILER_URL================>" + t.getTrailerUrl());
+        }
 
         txtTitle.setText(mTitle);
         txtYear.setText(mYear);
@@ -191,9 +206,12 @@ public class MovieDetailActivityFragment extends Fragment {
             }
         });
 
+
         if (flagDataType==1){
+            //from FAvoritesActivity
             getLocalData();
         }
+
 
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
@@ -224,7 +242,7 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=";
+        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
         String id = movieId;
 
 
@@ -306,16 +324,17 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
     private void requestMovieTrailer(String movieId){
+        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
         movieTrailersList = new ArrayList<>();
 
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=";
+        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
         String id = movieId;
         final String vid = "/videos";
         String trailer_url = BASE_PATH + id + vid + api_key;
 
-        Log.d("TRAILER URL--------> ", trailer_url);
+        Log.d("TRAILER URL----------> ", trailer_url);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
@@ -351,15 +370,23 @@ public class MovieDetailActivityFragment extends Fragment {
                             }
 
 
+                            //first trailer to send at share intent
+                            if (movieTrailersList!=null){
+                                first_trailer_url = movieTrailersList.get(0).getTrailerUrl();
+                            }else{
+                                //no trailer available
+                                first_trailer_url = "";
+                            }
+
                             for (Trailer trailer:movieTrailersList
                                  ) {
-                                System.out.println("TRAILER NUMBER!!!!!!!!!!!!!!!!" + trailer.getTrailerNumber());
+                                System.out.println("TRAILER NUMBER-----------> " + trailer.getTrailerNumber());
 
                             }
 
                             trailerListAdapter.setItemList(movieTrailersList);
                             trailerListAdapter.notifyDataSetChanged();
-                            System.out.println("FUCKIN SIZE" + movieTrailersList.size());
+                            Log.d("Trailer list size SIZE", String.valueOf(movieTrailersList.size()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -385,6 +412,8 @@ public class MovieDetailActivityFragment extends Fragment {
         //TODO : move this later at the oncreateView when you also fetched the array for the local data
         trailerListAdapter = new TrailerAdapter(movieTrailersList);
 
+
+
     }
 
 
@@ -393,14 +422,15 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
     private void requestMovieReviews(String movieId){
+        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=";
+        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
         String id = movieId;
         final String vid = "/reviews";
         final String reviews_url = BASE_PATH + id + vid + api_key;
 
-        Log.d("TRAILER URL---------> ", reviews_url);
+        Log.d("TRAILER URL--------> ", reviews_url);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
@@ -445,7 +475,7 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
                             }else {
-                                System.out.println("NO REVIEWS AVAILABLE");
+                                System.out.println(R.string.no_reviews);
                             }
 
 
@@ -482,6 +512,7 @@ public class MovieDetailActivityFragment extends Fragment {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         shareIntent.setType("text/plain");
+        String mMovieString = "Check out this movie, " + mTitle + ": " + first_trailer_url;
         shareIntent.putExtra(Intent.EXTRA_TEXT, mMovieString);
 
         return shareIntent;
@@ -527,7 +558,34 @@ public class MovieDetailActivityFragment extends Fragment {
         return downloadDialog.show();
     }
 
+    private JSONArray saveTrailers(){
+        //generate new JSON Array
+        JSONArray trailers = new JSONArray();
+
+        //loop through the trailer list and save each item in the JSONArray
+        for (int i = 0; i < movieTrailersList.size() ; i++) {
+            String trailer_num = movieTrailersList.get(i).getTrailerNumber();
+            String trailer_url = movieTrailersList.get(i).getTrailerUrl();
+
+
+            JSONObject trailer = new JSONObject();
+            try {
+                trailer.put("trailer_num", trailer_num);
+                trailer.put("trailer_url", trailer_url);
+
+                trailers.put(trailer);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            trailers.put(trailer);
+        }
+        return trailers;
+    }
+
     private void markAsFavorite() throws JSONException {
+
 
         //generate JSON(itemlist) so php can process it
         JSONObject item = new JSONObject();
@@ -540,6 +598,7 @@ public class MovieDetailActivityFragment extends Fragment {
             item.put("movie_date", mYear);
             item.put("movie_vote", mRating);
             item.put("movie_duration", mDuration);
+            item.put("movie_trailers", saveTrailers());
 
             //favorites.put(item);
             //save favoriteMovie in a list
@@ -559,6 +618,8 @@ public class MovieDetailActivityFragment extends Fragment {
         }
 
     }
+
+
 
 }
 

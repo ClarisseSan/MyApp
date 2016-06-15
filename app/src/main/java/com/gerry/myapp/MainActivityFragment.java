@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.gerry.myapp.movies.PopularMoviesActivity;
+import com.gerry.myapp.movies.activity.PopularMoviesActivity;
 
 /**
  * A placeholder fragment containing a simple view.

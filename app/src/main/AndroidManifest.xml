@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".movies.PopularMoviesActivity"
+            android:name=".movies.activity.PopularMoviesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pop_movies"
             android:parentActivityName=".MainActivity"
@@ -31,36 +31,41 @@
                 android:value="com.gerry.myapp.MainActivity" />
         </activity>
         <activity
-            android:name=".movies.SettingsActivity"
+            android:name=".movies.activity.SettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".movies.PopularMoviesActivity"
+            android:parentActivityName=".movies.activity.PopularMoviesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".movies.MovieDetailActivity"
+            android:name=".movies.activity.MovieDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_movie_detail"
-            android:parentActivityName=".movies.PopularMoviesActivity"
+            android:parentActivityName=".movies.activity.PopularMoviesActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gerry.myapp.movies.PopularMoviesActivity" />
+                android:value=".movies.activity.PopularMoviesActivity" />
         </activity>
         <activity
-            android:name=".movies.FavorActivity"
+            android:name=".movies.activity.FavorActivity"
             android:label="@string/title_activity_favor"
-            android:parentActivityName=".movies.PopularMoviesActivity" >
+            android:parentActivityName=".movies.activity.PopularMoviesActivity"
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gerry.myapp.movies.PopularMoviesActivity" />
+                android:value=".movies.activity.PopularMoviesActivity" />
         </activity>
         <activity
-            android:name=".movies.TrailerExampleActivity"
+            android:name=".movies.activity.TrailerExampleActivity"
             android:label="@string/title_activity_trailer_example"
-            android:parentActivityName=".movies.MovieDetailActivity" >
+            android:parentActivityName=".movies.activity.MovieDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gerry.myapp.movies.MovieDetailActivity" />
+                android:value=".movies.activity.MovieDetailActivity" />
+        </activity>
+        <activity
+            android:name=".movies.MovieMainActivity"
+            android:label="@string/title_activity_movie_main" >
         </activity>
     </application>
 

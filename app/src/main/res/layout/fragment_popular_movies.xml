@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gerry.myapp.movies.PopularMoviesActivityFragment"
+    tools:context="com.gerry.myapp.movies.fragment.PopularMoviesActivityFragment"
     tools:showIn="@layout/activity_popular_movies">
 
 

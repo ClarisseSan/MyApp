@@ -1,4 +1,4 @@
-package com.gerry.myapp.movies;
+package com.gerry.myapp.movies.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +15,7 @@ import android.widget.GridView;
 import com.gerry.myapp.R;
 import com.gerry.myapp.api.ApiCall;
 import com.gerry.myapp.api.ApiCallBack;
+import com.gerry.myapp.movies.activity.MovieDetailActivity;
 import com.gerry.myapp.movies.object.ImageListAdapter;
 import com.gerry.myapp.movies.object.MovieImage;
 
@@ -111,7 +112,7 @@ public class PopularMoviesActivityFragment extends Fragment {
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
         final String sort_order = "popular";
-        final String api_key = "?api_key=";
+        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
 
         String original_url = BASE_PATH + sort_order + api_key;
         System.out.println("ORIGINAL URL >>>>>>>>" + original_url);
@@ -179,7 +180,8 @@ public class PopularMoviesActivityFragment extends Fragment {
                     Log.e("ERROR", e.getMessage());
                 }
                 //URL for fetching all movies
-                 }
+                // http://api.themoviedb.org/3/movie/popular?api_key=6d369d4e0676612d2d046b7f3e8424bd
+            }
         }).execute(BASE_PATH + sortOption + api_key);
     }
 

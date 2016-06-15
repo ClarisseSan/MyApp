@@ -1,4 +1,4 @@
-package com.gerry.myapp.movies;
+package com.gerry.myapp.movies.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -67,11 +67,12 @@ public class TrailerExampleActivityFragment extends Fragment {
     }
 
     private void requestMovieTrailer(String movieId){
-       movieTrailersList = new ArrayList<>();
+        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
+        movieTrailersList = new ArrayList<>();
 
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=";
+        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
         String id = movieId;
         final String vid = "/videos";
         String trailer_url = BASE_PATH + id + vid + api_key;

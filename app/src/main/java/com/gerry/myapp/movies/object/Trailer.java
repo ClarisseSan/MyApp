@@ -52,4 +52,5 @@ public class Trailer implements Parcelable {
     public String getTrailerUrl() {
         return trailer_url;
     }
+
 }

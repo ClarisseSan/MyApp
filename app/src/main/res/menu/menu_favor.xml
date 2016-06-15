@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.gerry.myapp.movies.FavorActivity">
+    tools:context="com.gerry.myapp.movies.activity.FavorActivity">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
