@@ -127,9 +127,11 @@ public class MovieDetailActivityFragment extends Fragment {
         movieTrailersList = new ArrayList<>();
         List<Trailer> trailers = intent.getParcelableArrayListExtra("trailers");
 
-        for (Trailer t:trailers) {
-            System.out.println("TRAILER_URL================>" + t.getTrailerUrl());
+        movieTrailersList = trailers;
+        for (Trailer t:movieTrailersList) {
+            System.out.println("TRAILER_URL================>" + t.getTrailerNumber());
         }
+
 
         txtTitle.setText(mTitle);
         txtYear.setText(mYear);

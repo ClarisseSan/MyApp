@@ -246,6 +246,8 @@ public class FavorActivityFragment extends Fragment {
                 FavoriteMovie fav = new FavoriteMovie(movie_id,movie_name,movie_image,movie_overview,movie_date,movie_vote,movie_duration, movieTrailersList);
                 list.add(fav);
 
+
+
             }
 
             System.out.println("FAVORITE MOVIES SIZE---------> " + list.size());

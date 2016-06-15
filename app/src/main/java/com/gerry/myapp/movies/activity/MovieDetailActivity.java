@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.gerry.myapp.R;
 import com.gerry.myapp.movies.object.FavoriteMovie;
@@ -69,7 +70,11 @@ public class MovieDetailActivity extends AppCompatActivity {
                         fab.setImageResource(R.mipmap.ic_action_unfav);
 
                         //TODO: delete MOVIEID from the list
-
+                        try {
+                            removeFromFavorites();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         flag = 0;
                         break;
                 }
@@ -81,8 +86,42 @@ public class MovieDetailActivity extends AppCompatActivity {
         checkMovieID();
     }
 
+    private void removeFromFavorites() throws JSONException {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        public JSONArray getFavoriteMovies() throws JSONException {
+        // Prepare the blank array
+        JSONArray blank = new JSONArray();
+
+        // Get the order lines from preferences
+        String json = preferences.getString("favorites", null);
+
+        // Convert the json string into JSONArray
+        JSONArray lines = new JSONArray(json);
+        for (int i = 0; i < lines.length(); i++) {
+            // This is one order line on the preferences
+            JSONObject line = lines.getJSONObject(i);
+
+
+            System.out.println("THIS IS A LINE---> " + line);
+
+            String id = line.getString("movie_id");
+            if(id.equals(movieId)){
+                //TODO: remove movieeID from favorites
+                System.out.println("remove ID");
+
+
+            }
+
+        }
+
+        // At this point, the blank array only contains the order lines we wanted.
+
+        // Save it again on the preferences
+        preferences.edit().putString("favorites", blank.toString()).commit();
+    }
+
+
+    public JSONArray getFavoriteMovies() throws JSONException {
             //1. initialization of aactivity.... button is not yet clicked
             //screen shows, determine if movie ID is included in a list of favorite movies
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -132,6 +171,8 @@ public class MovieDetailActivity extends AppCompatActivity {
             fab.setImageResource(R.mipmap.ic_action_unfav);
         }
     }
+
+
 
 
     }
