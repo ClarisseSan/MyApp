@@ -107,88 +107,6 @@ public class FavorActivityFragment extends Fragment {
 
 
 
-
-    private void requestMovieTrailer(String movieId){
-        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
-        movieTrailersList = new ArrayList<>();
-
-
-        final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
-        String id = movieId;
-        final String vid = "/videos";
-        String trailer_url = BASE_PATH + id + vid + api_key;
-
-        Log.d("TRAILER URL----------> ", trailer_url);
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-
-
-        // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, trailer_url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Do something with the response
-                        System.out.println(response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray results = jsonObject.getJSONArray("results");
-
-
-                            for (int i = 0; i < results.length(); i++) {
-
-                                JSONObject obj = results.getJSONObject(i);
-                                String trailer_key = obj.getString("key");
-                                String youtube_trailer = "https://www.youtube.com/watch?v=" + trailer_key;
-                                String trailer_num = "Trailer " + (i+1);
-
-                                System.out.println("TRAILER NUMBER --------->" + trailer_num);
-                                System.out.println("TRAILER URL --------->" + youtube_trailer);
-
-                                Trailer trailer = new Trailer(trailer_num, youtube_trailer);
-
-                                //save trailers in a list
-                                movieTrailersList.add(trailer);
-
-                            }
-
-
-                            for (Trailer trailer:movieTrailersList
-                                    ) {
-                                System.out.println("TRAILER NUMBER------->" + trailer.getTrailerNumber());
-
-                            }
-
-
-
-                            trailerListAdapter.setItemList(movieTrailersList);
-                            trailerListAdapter.notifyDataSetChanged();
-                            System.out.println("Trailer SIZE: " + movieTrailersList.size());
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //other catches
-                        if(error instanceof NoConnectionError) {
-                            //show dialog no net connection
-                            // showSuccessDialog(getContext(), "No network connection", "This application requires an internet connection.").show();
-                        }
-                    }
-                });
-
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-
-    }
-
     public JSONArray getFavoriteMovies() throws JSONException {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String items = preferences.getString("favorites", "");
@@ -220,17 +138,22 @@ public class FavorActivityFragment extends Fragment {
                 String movie_duration = obj.getString("movie_duration");
                 JSONArray trailers = obj.getJSONArray("movie_trailers");
 
-                movieTrailersList = new ArrayList<>();
-                for (int j = 0; j < trailers.length(); j++) {
 
-                    JSONObject trailer = trailers.getJSONObject(i);
-                    String trailer_num = trailer.getString("trailer_num");
-                    String trailer_url = trailer.getString("trailer_url");
+                if (trailers.length()>=0){
+                    //if there are trailers available
+                    movieTrailersList = new ArrayList<>();
+                    for (int j = 0; j < trailers.length(); j++) {
 
-                    Trailer t = new Trailer(trailer_num, trailer_url);
-                    //save trailers in a list
-                    movieTrailersList.add(t);
+                        JSONObject trailer = trailers.getJSONObject(i);
+                        String trailer_num = trailer.getString("trailer_num");
+                        String trailer_url = trailer.getString("trailer_url");
+
+                        Trailer t = new Trailer(trailer_num, trailer_url);
+                        //save trailers in a list
+                        movieTrailersList.add(t);
+                    }
                 }
+
                 Log.d("xxxxx-add", "adding movie: " + movie_name);
                 System.out.println("TRAILERs SIZE---------->" + movieTrailersList.size());
 

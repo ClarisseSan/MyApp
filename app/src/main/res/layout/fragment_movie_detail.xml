@@ -6,18 +6,8 @@
 
     tools:context="com.gerry.myapp.movies.fragment.MovieDetailActivityFragment"
     tools:showIn="@layout/activity_movie_detail"
+
     >
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorBlue"
-        android:hint="Iron Man"
-        android:textColor="@color/colorWhite"
-        android:textSize="30dp"
-        android:padding="30dp"
-        android:id="@+id/txt_title"/>
-
 
 
     <ScrollView
@@ -83,19 +73,13 @@
                 android:padding="5dp"
                 android:textColor="@color/colorDark"/>
 
-            <Button
-                android:id="@+id/btnFavorite"
+            <RatingBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MARK AS FAVORITE"
-                android:background="@color/colorBlue"
-                android:layout_margin="20dp"
-                android:textColor="@color/colorWhite"
-                />
-
-
-
-
+                android:isIndicator="true"
+                android:numStars="5"
+                android:id="@+id/ratingBar"
+                android:theme="@style/RatingBar"/>
 
 
         </LinearLayout>

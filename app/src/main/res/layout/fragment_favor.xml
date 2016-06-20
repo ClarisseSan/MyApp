@@ -5,13 +5,6 @@
     tools:context="com.gerry.myapp.movies.fragment.FavorActivityFragment"
     android:background="@color/colorDark">
 
-<!--
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_hiro"/>
-
-        -->
 
     <GridView
         android:id="@+id/gridview_favorites"

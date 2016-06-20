@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,12 +66,15 @@ public class MovieDetailActivityFragment extends Fragment {
     private String mPoster;
     private String first_trailer_url = "";
 
-    private TextView txtTitle;
+
     private TextView txtYear;
     private TextView txtDuration;
     private TextView txtRating;
     private TextView txtDescription;
     private ImageView imgPoster;
+    private RatingBar ratingBar;
+
+    private float vote_average;
 
     private List<Trailer> movieTrailersList;
     private TrailerAdapter trailerListAdapter;
@@ -78,9 +82,11 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
 
-    private int flagDataType; //if from api or local data
+     //if from api or local data
     //flagDataType = 0 --> from popular movies Activty
     //flagDataType = 1 --> from favorites activity
+    private int flagDataType;
+
     private Intent intent;
 
 
@@ -101,6 +107,8 @@ public class MovieDetailActivityFragment extends Fragment {
             flagDataType = intent.getIntExtra("flagData",0);
             Toast.makeText(getContext(), "MY ID: " + movieId, Toast.LENGTH_SHORT).show();
         }
+
+
 
 
         if(flagDataType==0) {
@@ -133,7 +141,7 @@ public class MovieDetailActivityFragment extends Fragment {
         }
 
 
-        txtTitle.setText(mTitle);
+
         txtYear.setText(mYear);
         txtDuration.setText(mDuration);
         txtRating.setText(mRating);
@@ -155,11 +163,6 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
 
-
-        //Movie title
-        txtTitle = (TextView) rootView.findViewById(R.id.txt_title);
-
-
         //Movie Release Year
          txtYear = (TextView) rootView.findViewById(R.id.txt_year);
 
@@ -179,23 +182,8 @@ public class MovieDetailActivityFragment extends Fragment {
         //Movie poster
          imgPoster = (ImageView) rootView.findViewById(R.id.img_movie);
 
-        //favorites button
-        Button btnFavorite = (Button) rootView.findViewById(R.id.btnFavorite);
-        btnFavorite.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Do something in response to button click
-                try {
-                    markAsFavorite();
-                    //display in short period of time
-                    Toast.makeText(getActivity(), mTitle + " added to favorites",
-                            Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e(LOG_TAG,e.getMessage());
-                }
-
-            }
-        });
+        //rating
+         ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
 
 
@@ -277,6 +265,7 @@ public class MovieDetailActivityFragment extends Fragment {
                              mYear = jsonObject.getString("release_date").substring(0, 4);
                              mDuration = jsonObject.getString("runtime") + "min";
                              mRating = jsonObject.getString("vote_average") + "/10";
+                             vote_average = Float.parseFloat(jsonObject.getString("vote_average"));
                              mOverview = jsonObject.getString("overview");
                              mPoster = IMAGE_BASE_PATH + image_size + jsonObject.getString("poster_path");
 
@@ -288,11 +277,12 @@ public class MovieDetailActivityFragment extends Fragment {
                             Log.v("mOverview:>>>>>>>>>>>> ",mOverview);
                             Log.v("mPoster:>>>>>>>>>>>>>> ", mPoster);
 
-                            txtTitle.setText(mTitle);
+
                             txtYear.setText(mYear);
                             txtDuration.setText(mDuration);
                             txtRating.setText(mRating);
                             txtDescription.setText(mOverview);
+                            ratingBar.setRating(vote_average/2);
                             Glide
                                     .with(getContext())
                                     .load(mPoster)
@@ -373,7 +363,7 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
                             //first trailer to send at share intent
-                            if (movieTrailersList!=null){
+                            if (movieTrailersList.size()!=0){
                                 first_trailer_url = movieTrailersList.get(0).getTrailerUrl();
                             }else{
                                 //no trailer available
@@ -581,12 +571,12 @@ public class MovieDetailActivityFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            trailers.put(trailer);
+            //trailers.put(trailer);
         }
         return trailers;
     }
 
-    private void markAsFavorite() throws JSONException {
+    public void markAsFavorite() throws JSONException {
 
 
         //generate JSON(itemlist) so php can process it
@@ -602,6 +592,10 @@ public class MovieDetailActivityFragment extends Fragment {
             item.put("movie_duration", mDuration);
             item.put("movie_trailers", saveTrailers());
 
+
+            int size = saveTrailers().length();
+            System.out.println("TRAILER SIZE " + size);
+
             //favorites.put(item);
             //save favoriteMovie in a list
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -614,11 +608,16 @@ public class MovieDetailActivityFragment extends Fragment {
             jsonArray.put(item);
 
             preferences.edit().putString("favorites", jsonArray.toString()).commit();
-
+            Toast.makeText(getContext(), R.string.fav_add,
+                    Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public String getTitle(){
+        return mTitle;
     }
 
 

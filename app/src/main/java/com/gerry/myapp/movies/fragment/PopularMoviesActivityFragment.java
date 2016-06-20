@@ -40,9 +40,12 @@ public class PopularMoviesActivityFragment extends Fragment {
     String sortOption;
 
 
-    public PopularMoviesActivityFragment() {
-        setHasOptionsMenu(true);
+    public static PopularMoviesActivityFragment newInstance() {
+        PopularMoviesActivityFragment fragment = new PopularMoviesActivityFragment();
+        return fragment;
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +75,8 @@ public class PopularMoviesActivityFragment extends Fragment {
                 Intent i = new Intent(getActivity(), MovieDetailActivity.class)
                         //pass the selected movie_id to the next Activity
                         .putExtra(Intent.EXTRA_TEXT, Long.toString(id))
-                        .putExtra("flagData", 0);
+                        .putExtra("flagData", 0)
+                        .putExtra("title", mAdapter.getItem(position).getMovie_name());
 
 
 
@@ -185,4 +189,18 @@ public class PopularMoviesActivityFragment extends Fragment {
         }).execute(BASE_PATH + sortOption + api_key);
     }
 
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(String id);
+    }
 }

@@ -40,7 +40,10 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
-
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorBlueStar</item>
+        <item name="colorControlActivated">@color/colorB4</item>
+    </style>
 
 
 </resources>
