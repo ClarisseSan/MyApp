@@ -13,19 +13,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.android.volley.NoConnectionError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.gerry.myapp.R;
 import com.gerry.myapp.movies.activity.MovieDetailActivity;
 import com.gerry.myapp.movies.object.FavoriteListAdapter;
 import com.gerry.myapp.movies.object.FavoriteMovie;
 import com.gerry.myapp.movies.object.Trailer;
-import com.gerry.myapp.movies.object.TrailerListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +34,6 @@ public class FavorActivityFragment extends Fragment {
 
 
     private List<Trailer> movieTrailersList;
-    private TrailerListAdapter trailerListAdapter;
 
     private FavoriteListAdapter mAdapter;
     private ArrayList<FavoriteMovie> list;

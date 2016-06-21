@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gerry.myapp" >
+    package="com.gerry.myapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,11 +9,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pop_movies"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gerry.myapp.MainActivity" />
@@ -41,7 +41,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_movie_detail"
             android:parentActivityName=".movies.activity.PopularMoviesActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".movies.activity.PopularMoviesActivity" />
@@ -49,8 +49,7 @@
         <activity
             android:name=".movies.activity.FavorActivity"
             android:label="@string/title_activity_favor"
-            android:parentActivityName=".movies.activity.PopularMoviesActivity"
-            >
+            android:parentActivityName=".movies.activity.PopularMoviesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".movies.activity.PopularMoviesActivity" />
@@ -58,15 +57,14 @@
         <activity
             android:name=".movies.activity.TrailerExampleActivity"
             android:label="@string/title_activity_trailer_example"
-            android:parentActivityName=".movies.activity.MovieDetailActivity" >
+            android:parentActivityName=".movies.activity.MovieDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".movies.activity.MovieDetailActivity" />
         </activity>
         <activity
             android:name=".movies.MovieMainActivity"
-            android:label="@string/title_activity_movie_main" >
-        </activity>
+            android:label="@string/title_activity_movie_main"></activity>
     </application>
 
 </manifest>

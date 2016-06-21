@@ -37,7 +37,6 @@ import com.gerry.myapp.R;
 import com.gerry.myapp.movies.activity.TrailerExampleActivity;
 import com.gerry.myapp.movies.object.Movie;
 import com.gerry.myapp.movies.object.Trailer;
-import com.gerry.myapp.movies.object.TrailerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,10 +48,10 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MovieDetailActivityFragment extends Fragment {
+public class OverviewFragment extends Fragment {
 
     //variables for sharing
-    private static final String LOG_TAG = "MovieDetailActivityFragment.class";
+    private static final String LOG_TAG = "OverviewFragment.class";
 
     private String movieId;
     private ArrayList<Movie> list;
@@ -77,7 +76,6 @@ public class MovieDetailActivityFragment extends Fragment {
     private float vote_average;
 
     private List<Trailer> movieTrailersList;
-    private TrailerAdapter trailerListAdapter;
     private RecyclerView recyclerView;
 
 
@@ -88,11 +86,9 @@ public class MovieDetailActivityFragment extends Fragment {
     private int flagDataType;
 
     private Intent intent;
+    private OnDetailInteractionListener mListener; // this is the activity
 
-
-
-
-    public MovieDetailActivityFragment() {
+    public OverviewFragment() {
         setHasOptionsMenu(true);
     }
 
@@ -127,6 +123,7 @@ public class MovieDetailActivityFragment extends Fragment {
         mYear = intent.getStringExtra("year");
         mDuration = intent.getStringExtra("duration");
         mRating = intent.getStringExtra("rating");
+        vote_average = Float.parseFloat(mRating)/2;
         mOverview = intent.getStringExtra("overview");
         mPoster = intent.getStringExtra("poster" +
                 "");
@@ -137,15 +134,16 @@ public class MovieDetailActivityFragment extends Fragment {
 
         movieTrailersList = trailers;
         for (Trailer t:movieTrailersList) {
-            System.out.println("TRAILER_URL================>" + t.getTrailerNumber());
+            System.out.println("TRAILER_URL===========>" + t.getTrailerNumber());
         }
 
 
-
+        System.out.println("RATING NYA DAW------------->" + mRating);
         txtYear.setText(mYear);
         txtDuration.setText(mDuration);
-        txtRating.setText(mRating);
+        //txtRating.setText(String.valueOf(vote_average));
         txtDescription.setText(mOverview);
+        ratingBar.setRating(vote_average);
         Glide
                 .with(getContext())
                 .load(mPoster)
@@ -172,7 +170,7 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
         //Movie Rating
-         txtRating = (TextView) rootView.findViewById(R.id.txt_rating);
+        // txtRating = (TextView) rootView.findViewById(R.id.txt_rating);
 
 
         //Movie Description
@@ -205,16 +203,6 @@ public class MovieDetailActivityFragment extends Fragment {
 
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
-        /*
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(trailerListAdapter);
-        */
-
-        //ListView reviewsListView = (ListView) rootView.findViewById(R.id.list_reviews);
-        //reviewsListView.setAdapter(trailerListAdapter);
 
         return rootView;
 
@@ -280,7 +268,7 @@ public class MovieDetailActivityFragment extends Fragment {
 
                             txtYear.setText(mYear);
                             txtDuration.setText(mDuration);
-                            txtRating.setText(mRating);
+                            //txtRating.setText(mRating);
                             txtDescription.setText(mOverview);
                             ratingBar.setRating(vote_average/2);
                             Glide
@@ -376,8 +364,6 @@ public class MovieDetailActivityFragment extends Fragment {
 
                             }
 
-                            trailerListAdapter.setItemList(movieTrailersList);
-                            trailerListAdapter.notifyDataSetChanged();
                             Log.d("Trailer list size SIZE", String.valueOf(movieTrailersList.size()));
 
                         } catch (JSONException e) {
@@ -401,14 +387,21 @@ public class MovieDetailActivityFragment extends Fragment {
         queue.add(stringRequest);
 
 
-        //TODO : move this later at the oncreateView when you also fetched the array for the local data
-        trailerListAdapter = new TrailerAdapter(movieTrailersList);
 
 
 
     }
 
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnDetailInteractionListener) {
+            mListener = (OnDetailInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
 
 
@@ -588,7 +581,7 @@ public class MovieDetailActivityFragment extends Fragment {
             item.put("movie_overview", mOverview);
             item.put("movie_year", mYear);
             item.put("movie_date", mYear);
-            item.put("movie_vote", mRating);
+            item.put("movie_vote", vote_average);//dito
             item.put("movie_duration", mDuration);
             item.put("movie_trailers", saveTrailers());
 
@@ -621,7 +614,9 @@ public class MovieDetailActivityFragment extends Fragment {
     }
 
 
-
+    public interface OnDetailInteractionListener {
+        public void markAsFavorite();
+    }
 }
 
 
