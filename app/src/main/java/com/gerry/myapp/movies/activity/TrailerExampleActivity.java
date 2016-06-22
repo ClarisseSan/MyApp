@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.gerry.myapp.R;
-import com.gerry.myapp.movies.fragment.TrailerExampleFragment;
+import com.gerry.myapp.movies.fragment.TrailerFragment;
 import com.gerry.myapp.movies.object.Trailer;
 
-public class TrailerExampleActivity extends FragmentActivity implements TrailerExampleFragment.OnListFragmentInteractionListener {
+public class TrailerExampleActivity extends FragmentActivity implements TrailerFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class TrailerExampleActivity extends FragmentActivity implements TrailerE
             if (savedInstanceState != null) {
                 return;
             }
-            TrailerExampleFragment firstFragment = new TrailerExampleFragment();
+            TrailerFragment firstFragment = new TrailerFragment();
             firstFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
         }

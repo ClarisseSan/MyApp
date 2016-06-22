@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PopularMoviesActivityFragment extends Fragment {
+public class PopularMoviesFragment extends Fragment {
 
 
     private List<String> movieImages = new ArrayList<String>();
@@ -40,8 +40,8 @@ public class PopularMoviesActivityFragment extends Fragment {
     String sortOption;
 
 
-    public static PopularMoviesActivityFragment newInstance() {
-        PopularMoviesActivityFragment fragment = new PopularMoviesActivityFragment();
+    public static PopularMoviesFragment newInstance() {
+        PopularMoviesFragment fragment = new PopularMoviesFragment();
         return fragment;
     }
 

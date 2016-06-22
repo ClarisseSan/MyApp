@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FavorActivityFragment extends Fragment {
+public class FavoritesFragment extends Fragment {
 
 
 
@@ -38,14 +38,12 @@ public class FavorActivityFragment extends Fragment {
     private FavoriteListAdapter mAdapter;
     private ArrayList<FavoriteMovie> list;
 
-    public FavorActivityFragment() {
+    public FavoritesFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //requestMovieTrailer("293660");
-
     }
 
     @Override

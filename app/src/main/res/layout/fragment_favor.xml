@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gerry.myapp.movies.fragment.FavorActivityFragment"
+    tools:context=".movies.fragment.FavoritesFragment"
     android:background="@color/colorDark">
 
 

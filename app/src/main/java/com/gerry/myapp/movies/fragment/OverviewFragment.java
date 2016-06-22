@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +37,7 @@ import com.bumptech.glide.Glide;
 import com.gerry.myapp.R;
 import com.gerry.myapp.movies.activity.TrailerExampleActivity;
 import com.gerry.myapp.movies.object.Movie;
+import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Trailer;
 
 import org.json.JSONArray;
@@ -52,6 +54,7 @@ public class OverviewFragment extends Fragment {
 
     //variables for sharing
     private static final String LOG_TAG = "OverviewFragment.class";
+    private static final String STATE_ID = "movie_id" ;
 
     private String movieId;
     private ArrayList<Movie> list;
@@ -76,7 +79,8 @@ public class OverviewFragment extends Fragment {
     private float vote_average;
 
     private List<Trailer> movieTrailersList;
-    private RecyclerView recyclerView;
+
+    private List<Reviews>  reviewList;
 
 
 
@@ -105,15 +109,37 @@ public class OverviewFragment extends Fragment {
         }
 
 
-
-
         if(flagDataType==0) {
 
             requestMovieDetail(movieId);
             requestMovieTrailer(movieId);
-            // requestMovieReviews(movieId);
+            requestMovieReviews(movieId);
         }
 
+
+
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Save the current movieID state
+        outState.putString(STATE_ID, movieId);
+
+
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        // Check whether we're recreating a previously destroyed instance
+        if (savedInstanceState != null) {
+            // Restore value of members from saved state
+            movieId = savedInstanceState.getString(STATE_ID);
+        }
 
     }
 
@@ -199,11 +225,6 @@ public class OverviewFragment extends Fragment {
             //from FAvoritesActivity
             getLocalData();
         }
-
-
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
         return rootView;
 
     }
@@ -407,7 +428,9 @@ public class OverviewFragment extends Fragment {
 
 
     private void requestMovieReviews(String movieId){
-        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
+        //http://api.themoviedb.org/3/reviews/293660/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
+
+        reviewList = new ArrayList<>();
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
         final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
@@ -443,19 +466,19 @@ public class OverviewFragment extends Fragment {
                                     System.out.println("Author>>>>>>" + author);
                                     System.out.println("Content>>>>>>" + content);
 
-                                   // Reviews reviews = new Reviews(author, content);
-                                   // reviewList.add(reviews);
+                                    Reviews reviews = new Reviews(author, content);
+                                   reviewList.add(reviews);
 
                                 }
 
-                                /*
+
                                 if (reviewList!=null){
                                     for (Reviews review:reviewList) {
                                         Log.d("AUTHOR: ",String.valueOf(review.getAuthor()));
                                         Log.d("CONTENT: ",review.getContent());
                                     }
                                 }
-                                */
+
 
 
 
@@ -493,7 +516,7 @@ public class OverviewFragment extends Fragment {
 
 
 
-    private Intent createShareMovieIntent() {
+    public Intent createShareMovieIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         shareIntent.setType("text/plain");
@@ -503,30 +526,6 @@ public class OverviewFragment extends Fragment {
         return shareIntent;
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-        //inflate the menu; this adds item form the action bar
-        inflater.inflate(R.menu.menu_movie_detail,menu);
-
-        //retrieve the share menu item
-        MenuItem menuItem = menu.findItem(R.id.action_share);
-
-        //get the provider and hold unto it to set/change the sharedIntent
-        ShareActionProvider mShareActionProvider;
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-
-        //attach an intent to this ShareActionProvider. You can update it anytime
-        //like when the users select a pice of data they might like to share
-        if (mShareActionProvider!=null){
-            mShareActionProvider.setShareIntent(createShareMovieIntent());
-        }else{
-            Log.d(LOG_TAG,"share action provider is null");
-        }
-
-    }
 
     private AlertDialog showSuccessDialog(final Context context, CharSequence title, CharSequence message) {
         // Creates a popup dialog

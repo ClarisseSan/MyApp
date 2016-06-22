@@ -63,7 +63,7 @@
                 android:value=".movies.activity.MovieDetailActivity" />
         </activity>
         <activity
-            android:name=".movies.MovieMainActivity"
+            android:name=".movies.activity.MovieMainActivity"
             android:label="@string/title_activity_movie_main"></activity>
     </application>
 

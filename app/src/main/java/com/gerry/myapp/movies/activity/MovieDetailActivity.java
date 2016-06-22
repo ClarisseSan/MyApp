@@ -11,16 +11,21 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gerry.myapp.R;
 import com.gerry.myapp.movies.fragment.BlankFragment;
-import com.gerry.myapp.movies.fragment.TrailerExampleFragment;
+import com.gerry.myapp.movies.fragment.TrailerFragment;
 import com.gerry.myapp.movies.fragment.OverviewFragment;
 import com.gerry.myapp.movies.object.Trailer;
 
@@ -35,8 +40,9 @@ import io.karim.MaterialTabs;
 
 public class MovieDetailActivity extends AppCompatActivity implements
         OverviewFragment.OnDetailInteractionListener,
-        TrailerExampleFragment.OnListFragmentInteractionListener,
+        TrailerFragment.OnListFragmentInteractionListener,
         BlankFragment.OnFragmentInteractionListener {
+    private static final String LOG_TAG = "MovieDetailActivity.class" ;
     short flag;
     private String movieId;
     private String movieName;
@@ -143,6 +149,30 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        //inflate the menu; this adds item form the action bar
+
+        getMenuInflater().inflate(R.menu.menu_movie_detail,menu);;
+        //retrieve the share menu item
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+
+        //get the provider and hold unto it to set/change the sharedIntent
+        ShareActionProvider mShareActionProvider;
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        //attach an intent to this ShareActionProvider. You can update it anytime
+        //like when the users select a pice of data they might like to share
+        if (mShareActionProvider!=null){
+            mShareActionProvider.setShareIntent(detailFragment.createShareMovieIntent());
+        }else{
+            Log.d(LOG_TAG,"share action provider is null");
+        }
+
+        return true;
+    }
 
     private void removeFromFavorites() throws JSONException {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -268,7 +298,9 @@ public class MovieDetailActivity extends AppCompatActivity implements
         @Override
         public Fragment getItem(int position) {
             Fragment fragment = null;
-
+            //create bundle to pass movieId to the fragments
+            Bundle bundle = new Bundle();
+            bundle.putString("movieId", movieId);
             Context context = MovieDetailActivity.this;
 
             if (position == 0) {
@@ -277,7 +309,8 @@ public class MovieDetailActivity extends AppCompatActivity implements
             }
 
             if (position == 1) {
-                fragment = Fragment.instantiate(context, TrailerExampleFragment.class.getName());
+
+                fragment = Fragment.instantiate(context, TrailerFragment.class.getName(),bundle);
             }
             if (position == 2) {
                 fragment = Fragment.instantiate(context, BlankFragment.class.getName());
