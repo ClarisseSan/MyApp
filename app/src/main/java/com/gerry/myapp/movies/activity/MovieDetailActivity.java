@@ -35,7 +35,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import io.karim.MaterialTabs;
 
 
 public class MovieDetailActivity extends AppCompatActivity implements
@@ -51,7 +50,6 @@ public class MovieDetailActivity extends AppCompatActivity implements
     private FloatingActionButton fab;
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
     private ViewPager mViewPager;
-    private MaterialTabs mMaterialTabs;
     private OverviewFragment detailFragment;
 
     @Override
