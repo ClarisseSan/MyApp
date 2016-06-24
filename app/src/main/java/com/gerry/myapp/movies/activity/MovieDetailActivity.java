@@ -3,7 +3,6 @@ package com.gerry.myapp.movies.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -18,15 +17,15 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gerry.myapp.R;
-import com.gerry.myapp.movies.fragment.BlankFragment;
-import com.gerry.myapp.movies.fragment.TrailerFragment;
+import com.gerry.myapp.movies.fragment.ReviewFragment;
 import com.gerry.myapp.movies.fragment.OverviewFragment;
+import com.gerry.myapp.movies.fragment.TrailerFragment;
+import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Trailer;
 
 import org.json.JSONArray;
@@ -40,7 +39,7 @@ import java.util.ArrayList;
 public class MovieDetailActivity extends AppCompatActivity implements
         OverviewFragment.OnDetailInteractionListener,
         TrailerFragment.OnListFragmentInteractionListener,
-        BlankFragment.OnFragmentInteractionListener {
+        ReviewFragment.OnListFragmentInteractionListener {
     private static final String LOG_TAG = "MovieDetailActivity.class" ;
     short flag;
     private String movieId;
@@ -61,13 +60,16 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         Intent intent = this.getIntent();
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             movieId = intent.getStringExtra(Intent.EXTRA_TEXT);
             movieName = intent.getStringExtra("title");
             flagData = intent.getIntExtra("flagData", 0);
 
+        }
+
+        if(savedInstanceState!=null) {
+            movieId = savedInstanceState.getString("movieId");
         }
 
         getSupportActionBar().setTitle(movieName);
@@ -141,12 +143,15 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-
 
     }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("movieId", movieId);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -166,7 +171,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
         if (mShareActionProvider!=null){
             mShareActionProvider.setShareIntent(detailFragment.createShareMovieIntent());
         }else{
-            Log.d(LOG_TAG,"share action provider is null");
+            Log.e(LOG_TAG,"share action provider is null");
         }
 
         return true;
@@ -259,12 +264,12 @@ public class MovieDetailActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void markAsFavorite() {
 
     }
 
     @Override
-    public void markAsFavorite() {
+    public void onListFragmentInteraction(Reviews review) {
 
     }
 
@@ -290,7 +295,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
         @Override
         public int getCount() {
-            return mTitles.size();
+            return TITLES.length;
         }
 
         @Override
@@ -302,16 +307,14 @@ public class MovieDetailActivity extends AppCompatActivity implements
             Context context = MovieDetailActivity.this;
 
             if (position == 0) {
-                fragment = Fragment.instantiate(context, OverviewFragment.class.getName());
+                fragment = Fragment.instantiate(context, OverviewFragment.class.getName(), bundle);
                 detailFragment = (OverviewFragment) fragment;
             }
-
             if (position == 1) {
-
-                fragment = Fragment.instantiate(context, TrailerFragment.class.getName(),bundle);
+                fragment = Fragment.instantiate(context, TrailerFragment.class.getName(), bundle);
             }
             if (position == 2) {
-                fragment = Fragment.instantiate(context, BlankFragment.class.getName());
+                fragment = Fragment.instantiate(context, ReviewFragment.class.getName(), bundle);
             }
 
             return fragment;

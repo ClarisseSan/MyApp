@@ -17,6 +17,7 @@ import com.gerry.myapp.R;
 import com.gerry.myapp.movies.activity.MovieDetailActivity;
 import com.gerry.myapp.movies.object.FavoriteListAdapter;
 import com.gerry.myapp.movies.object.FavoriteMovie;
+import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Trailer;
 
 import org.json.JSONArray;
@@ -34,6 +35,9 @@ public class FavoritesFragment extends Fragment {
 
 
     private List<Trailer> movieTrailersList;
+
+    private List<Reviews> movieReviewsList;
+
 
     private FavoriteListAdapter mAdapter;
     private ArrayList<FavoriteMovie> list;
@@ -126,8 +130,9 @@ public class FavoritesFragment extends Fragment {
                 String movie_vote = obj.getString("movie_vote");
                 String movie_duration = obj.getString("movie_duration");
                 JSONArray trailers = obj.getJSONArray("movie_trailers");
+                JSONArray reviews = obj.getJSONArray("movie_reviews");
 
-
+                //FETCH TRAIlERS
                 if (trailers.length()>=0){
                     //if there are trailers available
                     movieTrailersList = new ArrayList<>();
@@ -143,6 +148,26 @@ public class FavoritesFragment extends Fragment {
                     }
                 }
 
+                //FETCH REVIEWS
+                if (reviews.length()>=0){
+                    //if there are trailers available
+                    movieReviewsList = new ArrayList<>();
+                    for (int j = 0; j < reviews.length(); j++) {
+
+                        JSONObject reviewObj = reviews.getJSONObject(i);
+
+                        String review_author = reviewObj.getString("review_author");
+                        String review_content = reviewObj.getString("review_content");
+
+
+
+                        Reviews rev = new Reviews(review_author, review_content);
+                        //save reviews in a list
+                        movieReviewsList.add(rev);
+                    }
+                }
+
+                //**********LOGS************//
                 Log.d("xxxxx-add", "adding movie: " + movie_name);
                 System.out.println("TRAILERs SIZE---------->" + movieTrailersList.size());
 
@@ -150,12 +175,11 @@ public class FavoritesFragment extends Fragment {
                 for (Trailer t:movieTrailersList
                      ) {
                     System.out.println("TRAILER: " + t.getTrailerUrl());
-
                 }
+                //**************************//
 
 
-
-                FavoriteMovie fav = new FavoriteMovie(movie_id,movie_name,movie_image,movie_overview,movie_date,movie_vote,movie_duration, movieTrailersList);
+                FavoriteMovie fav = new FavoriteMovie(movie_id,movie_name,movie_image,movie_overview,movie_date,movie_vote,movie_duration, movieTrailersList, movieReviewsList);
                 list.add(fav);
 
 

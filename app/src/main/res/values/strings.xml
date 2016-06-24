@@ -28,13 +28,14 @@
     <string name="title_activity_movie_main">MovieMainActivity</string>
 
     <string name="no_reviews">"NO REVIEWS AVAILABLE."</string>
-    <string name="no_connection">"No network connection", "This application requires an internet connection."</string>
+    <string name="no_connection">"No network connection"</string>
     <string name="fav_add">"Movie added to favorites"</string>
     <string name="fav_remove">"Movie removed from favorites"</string>
     <string name="title_activity_main2">Main2Activity</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_trailers">NO TRAILERS AVAILABLE.</string>
 
 
 </resources>

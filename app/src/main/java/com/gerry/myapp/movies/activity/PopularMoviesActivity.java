@@ -12,9 +12,6 @@ import com.gerry.myapp.R;
 public class PopularMoviesActivity extends AppCompatActivity {
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

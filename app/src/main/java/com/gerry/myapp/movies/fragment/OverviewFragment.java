@@ -2,25 +2,15 @@ package com.gerry.myapp.movies.fragment;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -35,10 +25,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.gerry.myapp.R;
-import com.gerry.myapp.movies.activity.TrailerExampleActivity;
-import com.gerry.myapp.movies.object.Movie;
 import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Trailer;
+import com.gerry.myapp.movies.object.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,8 +46,6 @@ public class OverviewFragment extends Fragment {
     private static final String STATE_ID = "movie_id" ;
 
     private String movieId;
-    private ArrayList<Movie> list;
-
 
     private String mTitle;
     private String mYear;
@@ -67,6 +54,8 @@ public class OverviewFragment extends Fragment {
     private String mOverview;
     private String mPoster;
     private String first_trailer_url = "";
+
+
 
 
     private TextView txtYear;
@@ -108,6 +97,12 @@ public class OverviewFragment extends Fragment {
             Toast.makeText(getContext(), "MY ID: " + movieId, Toast.LENGTH_SHORT).show();
         }
 
+        if(savedInstanceState!=null) {
+            movieId = savedInstanceState.getString("movieId");
+            mPoster = savedInstanceState.getString("mPoster");
+            flagDataType= savedInstanceState.getInt("flagDataType");
+        }
+
 
         if(flagDataType==0) {
 
@@ -115,33 +110,30 @@ public class OverviewFragment extends Fragment {
             requestMovieTrailer(movieId);
             requestMovieReviews(movieId);
         }
-
-
-
-    }
-
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        // Save the current movieID state
-        outState.putString(STATE_ID, movieId);
-
-
-        // Always call the superclass so it can save the view hierarchy state
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-        // Check whether we're recreating a previously destroyed instance
-        if (savedInstanceState != null) {
-            // Restore value of members from saved state
-            movieId = savedInstanceState.getString(STATE_ID);
+        else {
+            Log.v("xxxxxxxx", "not getting from internet");
         }
 
     }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setValuesOfView();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Always call the superclass so it can save the view hierarchy state
+        super.onSaveInstanceState(outState);
+        // Save the current movieID state
+        outState.putString(STATE_ID, movieId);
+        outState.putString("mPoster", mPoster);
+        outState.putInt("flagDataType", flagDataType);
+    }
+
 
     private void getLocalData() {
 
@@ -183,7 +175,7 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
 
 
 
@@ -208,17 +200,6 @@ public class OverviewFragment extends Fragment {
 
         //rating
          ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
-
-
-
-        Button btntrailer = (Button) rootView.findViewById(R.id.btnTrailers);
-        btntrailer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), TrailerExampleActivity.class);
-                startActivity(i);
-            }
-        });
 
 
         if (flagDataType==1){
@@ -286,18 +267,8 @@ public class OverviewFragment extends Fragment {
                             Log.v("mOverview:>>>>>>>>>>>> ",mOverview);
                             Log.v("mPoster:>>>>>>>>>>>>>> ", mPoster);
 
+                            setValuesOfView();
 
-                            txtYear.setText(mYear);
-                            txtDuration.setText(mDuration);
-                            //txtRating.setText(mRating);
-                            txtDescription.setText(mOverview);
-                            ratingBar.setRating(vote_average/2);
-                            Glide
-                                    .with(getContext())
-                                    .load(mPoster)
-                                    .centerCrop()
-                                    .error(R.mipmap.error)
-                                    .into(imgPoster);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -310,7 +281,7 @@ public class OverviewFragment extends Fragment {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(getContext(), "No network connection", "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
                         }
                     }
                 });
@@ -321,7 +292,19 @@ public class OverviewFragment extends Fragment {
 
     }
 
-
+    private void setValuesOfView() {
+        txtYear.setText(mYear);
+        txtDuration.setText(mDuration);
+        //txtRating.setText(mRating);
+        txtDescription.setText(mOverview);
+        ratingBar.setRating(vote_average/2);
+        Glide
+                .with(getContext())
+                .load(mPoster)
+                .centerCrop()
+                .error(R.mipmap.error)
+                .into(imgPoster);
+    }
 
 
     private void requestMovieTrailer(String movieId){
@@ -398,7 +381,7 @@ public class OverviewFragment extends Fragment {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(getContext(), "No network connection", "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
                         }
                     }
                 });
@@ -502,7 +485,7 @@ public class OverviewFragment extends Fragment {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(getContext(), "No network connection", "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
                         }
                     }
                 });
@@ -527,19 +510,31 @@ public class OverviewFragment extends Fragment {
     }
 
 
-    private AlertDialog showSuccessDialog(final Context context, CharSequence title, CharSequence message) {
-        // Creates a popup dialog
-        AlertDialog.Builder downloadDialog = new AlertDialog.Builder(context);
-        downloadDialog.setTitle(title);
-        downloadDialog.setMessage(message);
-        downloadDialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            // Method below is the click handler for the YES button on the popup
-            public void onClick(DialogInterface dialogInterface, int i) {
 
+
+    private JSONArray saveReviews(){
+        //generate new JSON Array
+        JSONArray reviews = new JSONArray();
+
+        //loop through the trailer list and save each item in the JSONArray
+        for (int i = 0; i < reviewList.size() ; i++) {
+            String trailer_num = reviewList.get(i).getAuthor();
+            String trailer_url = reviewList.get(i).getContent();
+
+
+            JSONObject reviewObject = new JSONObject();
+            try {
+                reviewObject.put("review_author", trailer_num);
+                reviewObject.put("review_content", trailer_url);
+
+                reviews.put(reviewObject);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
 
-        return downloadDialog.show();
+        }
+        return reviews;
     }
 
     private JSONArray saveTrailers(){
@@ -563,7 +558,6 @@ public class OverviewFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            //trailers.put(trailer);
         }
         return trailers;
     }
@@ -580,9 +574,10 @@ public class OverviewFragment extends Fragment {
             item.put("movie_overview", mOverview);
             item.put("movie_year", mYear);
             item.put("movie_date", mYear);
-            item.put("movie_vote", vote_average);//dito
+            item.put("movie_vote", vote_average);
             item.put("movie_duration", mDuration);
             item.put("movie_trailers", saveTrailers());
+            item.put("movie_reviews", saveReviews());
 
 
             int size = saveTrailers().length();

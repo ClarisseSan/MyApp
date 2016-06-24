@@ -25,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.gerry.myapp.R;
 import com.gerry.myapp.movies.object.MyTrailerExampleRecyclerViewAdapter;
 import com.gerry.myapp.movies.object.Trailer;
+import com.gerry.myapp.movies.object.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -106,7 +107,7 @@ public class TrailerFragment extends Fragment  {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            //dff
+
             recyclerView.setAdapter(new MyTrailerExampleRecyclerViewAdapter(movieTrailersList, mListener));
         }
 
@@ -219,15 +220,21 @@ public class TrailerFragment extends Fragment  {
 
                             }
 
-                            for (Trailer trailer:movieTrailersList
-                                    ) {
-                                System.out.println("TRAILER NUMBER-----------> " + trailer.getTrailerNumber());
+                            if (movieTrailersList!=null){
+                                for (Trailer trailer:movieTrailersList
+                                        ) {
+                                    System.out.println("TRAILER NUMBER-----------> " + trailer.getTrailerNumber());
+                                }
 
-                            }
+                            recyclerView.getAdapter().notifyDataSetChanged();
+
+                        }else {
+                            System.out.println(R.string.no_trailers);
+                        }
 
                             trailerListAdapter.setItemList(movieTrailersList);
                             trailerListAdapter.notifyDataSetChanged();
-                            Log.d("Trailer list size SIZE", String.valueOf(movieTrailersList.size()));
+                            Log.d("Trailer list size: ", String.valueOf(movieTrailersList.size()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -240,7 +247,7 @@ public class TrailerFragment extends Fragment  {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            //showSuccessDialog(getContext(), "No network connection", "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
                         }
                     }
                 });
@@ -249,8 +256,6 @@ public class TrailerFragment extends Fragment  {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
-
-        //TODO : move this later at the oncreateView when you also fetched the array for the local data
         trailerListAdapter = new MyTrailerExampleRecyclerViewAdapter(movieTrailersList,mListener);
 
 

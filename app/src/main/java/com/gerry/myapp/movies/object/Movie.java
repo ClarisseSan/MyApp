@@ -17,9 +17,10 @@ public class Movie implements Parcelable {
     String movie_vote;
     String movie_duration;
     List<Trailer> trailerList;
+    List<Reviews> reviewsList;
 
 
-    public Movie(long movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String movie_duration, List<Trailer> trailerList) {
+    public Movie(long movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String movie_duration, List<Trailer> trailerList, List<Reviews> reviewsList) {
         this.movie_id = movie_id;
         this.movie_name = movie_name;
         this.movie_image = movie_image;
@@ -28,6 +29,7 @@ public class Movie implements Parcelable {
         this.movie_vote = movie_vote;
         this.movie_duration = movie_duration;
         this.trailerList = trailerList;
+        this.reviewsList = reviewsList;
     }
 
     protected Movie(Parcel in) {
@@ -38,6 +40,7 @@ public class Movie implements Parcelable {
         movie_date = in.readString();
         movie_duration = in.readString();
         trailerList = in.createTypedArrayList(Trailer.CREATOR);
+        reviewsList = in.createTypedArrayList(Reviews.CREATOR);
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -70,6 +73,18 @@ public class Movie implements Parcelable {
     public void setTrailerList(List<Trailer> trailerList) {
 
         this.trailerList = trailerList;
+    }
+
+    public List<Trailer> getTrailerList() {
+        return trailerList;
+    }
+
+    public List<Reviews> getReviewsList() {
+        return reviewsList;
+    }
+
+    public void setReviewsList(List<Reviews> reviewsList) {
+        this.reviewsList = reviewsList;
     }
 
     public void setMovie_duration(String movie_duration) {

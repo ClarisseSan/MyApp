@@ -11,11 +11,6 @@ import com.gerry.myapp.movies.fragment.TrailerFragment.OnListFragmentInteraction
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyTrailerExampleRecyclerViewAdapter extends RecyclerView.Adapter<MyTrailerExampleRecyclerViewAdapter.ViewHolder> {
 
 

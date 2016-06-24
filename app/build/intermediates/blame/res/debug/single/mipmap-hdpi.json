@@ -1,26 +1,26 @@
 [
     {
-        "merged": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
-        "source": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\error.png",
-        "source": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\src\\main\\res\\mipmap-hdpi\\error.png"
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_fav.png",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_fav.png"
     },
     {
-        "merged": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_fav.png",
-        "source": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\src\\main\\res\\mipmap-hdpi\\ic_fav.png"
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\error.png",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\mipmap-hdpi\\error.png"
     },
     {
-        "merged": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_action_unfav.png",
-        "source": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\src\\main\\res\\mipmap-hdpi\\ic_action_unfav.png"
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_action_fav.png",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_action_fav.png"
     },
     {
-        "merged": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_action_fav.png",
-        "source": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\src\\main\\res\\mipmap-hdpi\\ic_action_fav.png"
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_play.png",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_play.png"
     },
     {
-        "merged": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_play.png",
-        "source": "C:\\Users\\isse\\Documents\\udacity\\PopMovies\\app\\src\\main\\res\\mipmap-hdpi\\ic_play.png"
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_action_unfav.png",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_action_unfav.png"
     }
 ]
