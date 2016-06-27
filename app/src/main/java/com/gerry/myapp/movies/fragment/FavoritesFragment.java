@@ -133,7 +133,7 @@ public class FavoritesFragment extends Fragment {
                 JSONArray reviews = obj.getJSONArray("movie_reviews");
 
                 //FETCH TRAIlERS
-                if (trailers.length()>=0){
+                if (trailers.length()>0){
                     //if there are trailers available
                     movieTrailersList = new ArrayList<>();
                     for (int j = 0; j < trailers.length(); j++) {
@@ -145,6 +145,8 @@ public class FavoritesFragment extends Fragment {
                         Trailer t = new Trailer(trailer_num, trailer_url);
                         //save trailers in a list
                         movieTrailersList.add(t);
+
+
                     }
                 }
 
@@ -159,8 +161,6 @@ public class FavoritesFragment extends Fragment {
                         String review_author = reviewObj.getString("review_author");
                         String review_content = reviewObj.getString("review_content");
 
-
-
                         Reviews rev = new Reviews(review_author, review_content);
                         //save reviews in a list
                         movieReviewsList.add(rev);
@@ -169,7 +169,7 @@ public class FavoritesFragment extends Fragment {
 
                 //**********LOGS************//
                 Log.d("xxxxx-add", "adding movie: " + movie_name);
-                System.out.println("TRAILERs SIZE---------->" + movieTrailersList.size());
+                System.out.println("TRAILER SIZE---------->" + movieTrailersList.size());
 
                 System.out.println("MOVIE NAME = " + movie_name);
                 for (Trailer t:movieTrailersList
@@ -182,15 +182,13 @@ public class FavoritesFragment extends Fragment {
                 FavoriteMovie fav = new FavoriteMovie(movie_id,movie_name,movie_image,movie_overview,movie_date,movie_vote,movie_duration, movieTrailersList, movieReviewsList);
                 list.add(fav);
 
+                System.out.println("FAVORITE MOVIES SIZE---------> " + list.size());
 
+
+                mAdapter.setItemList(list);
+                mAdapter.notifyDataSetChanged();
 
             }
-
-            System.out.println("FAVORITE MOVIES SIZE---------> " + list.size());
-
-            mAdapter.setItemList(list);
-            mAdapter.notifyDataSetChanged();
-
 
         } catch (JSONException e) {
             e.printStackTrace();

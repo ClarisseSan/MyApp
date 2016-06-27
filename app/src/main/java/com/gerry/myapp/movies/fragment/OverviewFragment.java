@@ -121,7 +121,10 @@ public class OverviewFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        setValuesOfView();
+        if (flagDataType == 0){
+            setValuesOfView();
+        }
+
     }
 
     @Override
@@ -281,7 +284,7 @@ public class OverviewFragment extends Fragment {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -340,7 +343,8 @@ public class OverviewFragment extends Fragment {
 
                                 JSONObject obj = results.getJSONObject(i);
                                 String trailer_key = obj.getString("key");
-                                String youtube_trailer = "https://www.youtube.com/watch?v=" + trailer_key;
+                                //String youtube_trailer = "https://www.youtube.com/watch?v=" + trailer_key;
+                                String youtube_trailer =  trailer_key;
                                 String trailer_num = "Trailer " + (i+1);
 
                                 System.out.println("TRAILER NUMBER --------->" + trailer_num);
@@ -381,7 +385,7 @@ public class OverviewFragment extends Fragment {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -485,7 +489,7 @@ public class OverviewFragment extends Fragment {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -516,24 +520,33 @@ public class OverviewFragment extends Fragment {
         //generate new JSON Array
         JSONArray reviews = new JSONArray();
 
-        //loop through the trailer list and save each item in the JSONArray
-        for (int i = 0; i < reviewList.size() ; i++) {
-            String trailer_num = reviewList.get(i).getAuthor();
-            String trailer_url = reviewList.get(i).getContent();
+        String trailer_num = " ";
+        String trailer_url = " ";
+
+        //if reviews are available
+
+        if(reviewList.size()!=0){
+            //loop through the trailer list and save each item in the JSONArray
+            for (int i = 0; i < reviewList.size() ; i++) {
+                trailer_num = reviewList.get(i).getAuthor();
+                trailer_url = reviewList.get(i).getContent();
 
 
-            JSONObject reviewObject = new JSONObject();
-            try {
-                reviewObject.put("review_author", trailer_num);
-                reviewObject.put("review_content", trailer_url);
+                JSONObject reviewObject = new JSONObject();
+                try {
+                    reviewObject.put("review_author", trailer_num);
+                    reviewObject.put("review_content", trailer_url);
 
-                reviews.put(reviewObject);
+                    reviews.put(reviewObject);
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
-
         }
+
+
         return reviews;
     }
 

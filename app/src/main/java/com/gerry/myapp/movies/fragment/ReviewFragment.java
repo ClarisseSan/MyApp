@@ -174,41 +174,55 @@ public class ReviewFragment extends Fragment {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray results = jsonObject.getJSONArray("results");
-
+                            String author = "";
+                            String content = "";
 
                             if (results!=null){
                                 for (int i = 0; i < results.length(); i++) {
 
                                     JSONObject obj = results.getJSONObject(i);
-                                    String author = obj.getString("author");
-                                    String content = obj.getString("content");
+                                     author = obj.getString("author");
+                                     content = obj.getString("content");
 
-                                    System.out.println("Author>>>>>>" + author);
-                                    System.out.println("Content>>>>>>" + content);
-
+                                    //add to a review object
                                     Reviews reviews = new Reviews(author, content);
                                     movieReviewList.add(reviews);
 
-                                }
+                                 }
 
+                                //dito
+                                // recyclerView.getAdapter().notifyDataSetChanged();
 
-                                if (movieReviewList!=null){
-                                    for (Reviews review:movieReviewList) {
-                                        Log.d("AUTHOR: ",String.valueOf(review.getAuthor()));
-                                        Log.d("CONTENT: ",review.getContent());
-                                    }
-                                }
-
-                                recyclerView.getAdapter().notifyDataSetChanged();
-
-                            }else {
-                                System.out.println(R.string.no_reviews);
                             }
 
+                            //==============================LOGS=================================/
+
+
+                           if (movieReviewList!=null){
+                                for (Reviews review:movieReviewList) {
+                                    Log.d("AUTHOR: ",String.valueOf(review.getAuthor()));
+                                    Log.d("CONTENT: ",review.getContent());
+                                }
+                            }
+                            //====================================================================/
+
+                            if(movieReviewList.size()==0){
+                                author = "No Reviews Available";
+                                content = " ";
+
+                                //add to a review object
+                                Reviews reviews = new Reviews(author, content);
+                                movieReviewList.add(reviews);
+                            }
+
+                            Log.d("Review list size ", String.valueOf(movieReviewList.size()));
+
+                            //updates recyclerview once data is fetched from the API call
+                            recyclerView.getAdapter().notifyDataSetChanged();
                             reviewListAdapter.setItemList(movieReviewList);
                             reviewListAdapter.notifyDataSetChanged();
 
-                            Log.d("Review list size: ", String.valueOf(movieReviewList.size()));
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -221,7 +235,7 @@ public class ReviewFragment extends Fragment {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });

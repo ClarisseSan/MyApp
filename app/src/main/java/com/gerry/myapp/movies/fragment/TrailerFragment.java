@@ -1,8 +1,6 @@
 package com.gerry.myapp.movies.fragment;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -33,12 +32,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
+ *
+ *
  */
 public class TrailerFragment extends Fragment  {
 
@@ -114,8 +114,11 @@ public class TrailerFragment extends Fragment  {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //Movie movie = movieList.get(position);
-               // Toast.makeText(getApplicationContext(), movie.getTitle() + " is selected!", Toast.LENGTH_SHORT).show();
+
+                Trailer trailer = movieTrailersList.get(position);
+                String url = trailer.getTrailerUrl();
+                Toast.makeText(getContext(), trailer.getTrailerUrl() + " is selected!", Toast.LENGTH_SHORT).show();
+                //launchYoutube(Config.DEVELOPER_KEY, url);
             }
 
             @Override
@@ -163,18 +166,32 @@ public class TrailerFragment extends Fragment  {
 
 
     /**
-     * Launch Youtube to watch an URL
-     * @param context
-     * @param url
-     */
-    private void launchYoutube(Context context, String url) {
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
-        intent.setClassName(YOUTUBE_PACKAGE_NAME, YOUTUBE_CLASS_NAME);
-        context.startActivity(intent);
+     * Launch Youtube to watch  URL
+    */
+    private void launchYoutube(String api_key, String video_id) {
+        //Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
+        //intent.setClassName(YOUTUBE_PACKAGE_NAME, YOUTUBE_CLASS_NAME);
+        //context.startActivity(intent);
+
+
+        //Check for any issues
+        /*
+        final YouTubeInitializationResult result = YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(this);
+
+        if (result != YouTubeInitializationResult.SUCCESS) {
+            //If there are any issues we can show an error dialog.
+            result.getErrorDialog(this, 0).show();
+        }
+        */
+
+
+       // Intent intent = YouTubeStandalonePlayer.createVideoIntent(getActivity(), api_key, video_id);
+        //startActivity(intent);
+
     }
 
     private void requestMovieTrailer(String movieId){
-        //
+
 
         movieTrailersList = new ArrayList<>();
 
@@ -207,7 +224,8 @@ public class TrailerFragment extends Fragment  {
 
                                 JSONObject obj = results.getJSONObject(i);
                                 String trailer_key = obj.getString("key");
-                                String youtube_trailer = "https://www.youtube.com/watch?v=" + trailer_key;
+                                //String youtube_trailer = "https://www.youtube.com/watch?v=" + trailer_key;
+                                String youtube_trailer =  trailer_key;
                                 String trailer_num = "Trailer " + (i+1);
 
                                 System.out.println("TRAILER NUMBER --------->" + trailer_num);
@@ -247,7 +265,7 @@ public class TrailerFragment extends Fragment  {
                         //other catches
                         if(error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            Utils.showSuccessDialog(getContext(), R.string.no_connection, "This application requires an internet connection.").show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });

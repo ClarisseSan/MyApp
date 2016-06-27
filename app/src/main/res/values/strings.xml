@@ -36,6 +36,7 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_trailers">NO TRAILERS AVAILABLE.</string>
+    <string name="net">This application requires an internet connection.</string>
 
 
 </resources>
