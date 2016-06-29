@@ -55,9 +55,6 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.fragment_favor, container, false);
 
-        //trailerListAdapter = new TrailerListAdapter(getActivity(), movieTrailersList);
-        //ListView listView = (ListView) rootView.findViewById(R.id.list_hiro);
-        //listView.setAdapter(trailerListAdapter);
         mAdapter =  new FavoriteListAdapter(getActivity(), list);
         GridView moviesGridView = (GridView) rootView.findViewById(R.id.gridview_favorites);
         moviesGridView.setAdapter(mAdapter);

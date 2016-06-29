@@ -21,7 +21,7 @@
     <color name="colorB5">#9E9E9E</color>
     <color name="colorB6">#e1e1d0</color>
     <color name="colorB7">#E0E0E0</color>
-    <color name="colorBlue">#00897B</color>
+    <color name="colorBlue">#25B7D3</color>
     <color name="colorBlueStar">#2F8EFF</color>
 
 
@@ -34,6 +34,8 @@
 
     <color name="selected_text_color">#212121</color>
     <color name="unselected_text_color">#727272</color>
+
+    <color name="black_overlay">#66000000</color>
 
 
 </resources>

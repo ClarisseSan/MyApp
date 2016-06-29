@@ -1,19 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_trailer_example.xml",
-        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\menu\\menu_trailer_example.xml"
-    },
-    {
         "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_movie_detail.xml",
         "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\menu\\menu_movie_detail.xml"
     },
     {
         "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_popular_movies.xml",
         "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\menu\\menu_popular_movies.xml"
-    },
-    {
-        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_main.xml",
-        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\menu\\menu_main.xml"
     },
     {
         "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\menu\\menu_favor.xml",

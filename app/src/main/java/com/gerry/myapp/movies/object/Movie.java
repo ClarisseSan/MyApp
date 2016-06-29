@@ -9,9 +9,9 @@ import java.util.List;
  * Created by gerry on 19/5/16.
  */
 public class Movie implements Parcelable {
-    long movie_id;
-    String movie_name;
-    String movie_image;
+    public long movie_id;
+    public String movie_name;
+    public String movie_image;
     String movie_overview;
     String movie_date;
     String movie_vote;

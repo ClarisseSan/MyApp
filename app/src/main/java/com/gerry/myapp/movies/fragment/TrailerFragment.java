@@ -1,6 +1,7 @@
 package com.gerry.myapp.movies.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,9 +23,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gerry.myapp.R;
+import com.gerry.myapp.movies.object.Config;
 import com.gerry.myapp.movies.object.MyTrailerExampleRecyclerViewAdapter;
 import com.gerry.myapp.movies.object.Trailer;
 import com.gerry.myapp.movies.object.Utils;
+import com.google.android.youtube.player.YouTubeApiServiceUtil;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeStandalonePlayer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,6 +92,14 @@ public class TrailerFragment extends Fragment  {
             movieId = getArguments().getString("movieId");
         }
 
+        //Check for any issues
+        final YouTubeInitializationResult result = YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(getActivity());
+
+        if (result != YouTubeInitializationResult.SUCCESS) {
+            //If there are any issues we can show an error dialog.
+            result.getErrorDialog(getActivity(), 0).show();
+        }
+
 
     }
 
@@ -118,7 +131,7 @@ public class TrailerFragment extends Fragment  {
                 Trailer trailer = movieTrailersList.get(position);
                 String url = trailer.getTrailerUrl();
                 Toast.makeText(getContext(), trailer.getTrailerUrl() + " is selected!", Toast.LENGTH_SHORT).show();
-                //launchYoutube(Config.DEVELOPER_KEY, url);
+                launchYoutube(Config.DEVELOPER_KEY, url);
             }
 
             @Override
@@ -169,24 +182,9 @@ public class TrailerFragment extends Fragment  {
      * Launch Youtube to watch  URL
     */
     private void launchYoutube(String api_key, String video_id) {
-        //Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
-        //intent.setClassName(YOUTUBE_PACKAGE_NAME, YOUTUBE_CLASS_NAME);
-        //context.startActivity(intent);
 
-
-        //Check for any issues
-        /*
-        final YouTubeInitializationResult result = YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(this);
-
-        if (result != YouTubeInitializationResult.SUCCESS) {
-            //If there are any issues we can show an error dialog.
-            result.getErrorDialog(this, 0).show();
-        }
-        */
-
-
-       // Intent intent = YouTubeStandalonePlayer.createVideoIntent(getActivity(), api_key, video_id);
-        //startActivity(intent);
+        Intent intent = YouTubeStandalonePlayer.createVideoIntent(getActivity(), api_key, video_id);
+        startActivity(intent);
 
     }
 

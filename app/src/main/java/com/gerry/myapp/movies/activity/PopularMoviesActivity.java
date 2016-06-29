@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gerry.myapp.R;
+import com.gerry.myapp.movies.carousel.MainCarousel;
 
 public class PopularMoviesActivity extends AppCompatActivity {
 
@@ -19,11 +20,7 @@ public class PopularMoviesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-
 
     }
 
@@ -45,7 +42,7 @@ public class PopularMoviesActivity extends AppCompatActivity {
         }
 
         if (id==R.id.action_fav){
-            Intent intent = new Intent(this, FavorActivity.class);
+            Intent intent = new Intent(this, MainCarousel.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

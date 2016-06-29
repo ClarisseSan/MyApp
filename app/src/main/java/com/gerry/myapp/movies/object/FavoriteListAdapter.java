@@ -20,7 +20,6 @@ public class FavoriteListAdapter extends ArrayAdapter {
     private Context context;
     private LayoutInflater inflater;
 
-    private List<String> imageUrls;
     private List<FavoriteMovie> favoriteMovies;
 
     public FavoriteListAdapter(Context context, List<FavoriteMovie> favoriteMovies) {
@@ -36,6 +35,7 @@ public class FavoriteListAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
+
 
         //check to see if we have a view
         if (convertView == null){

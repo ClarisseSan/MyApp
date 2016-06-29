@@ -33,7 +33,7 @@ public class MyTrailerExampleRecyclerViewAdapter extends RecyclerView.Adapter<My
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.trailer = trailerList.get(position);
         holder.trailer_num.setText(trailerList.get(position).getTrailerNumber());
-        holder.trailer_url.setText(trailerList.get(position).getTrailerUrl());
+        //holder.trailer_url.setText(trailerList.get(position).getTrailerUrl());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,14 +60,14 @@ public class MyTrailerExampleRecyclerViewAdapter extends RecyclerView.Adapter<My
     public class ViewHolder extends RecyclerView.ViewHolder {
         public  View mView;
         public  TextView trailer_num;
-        public TextView trailer_url;
+        //public TextView trailer_url;
         public Trailer trailer;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             trailer_num = (TextView) view.findViewById(R.id.txt_trailer);
-            trailer_url = (TextView) view.findViewById(R.id.txt_url);
+            //trailer_url = (TextView) view.findViewById(R.id.txt_url);
         }
 
         @Override

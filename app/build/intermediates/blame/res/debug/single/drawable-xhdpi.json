@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_loading_spinner.png",
         "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\drawable-xhdpi\\ic_loading_spinner.png"
+    },
+    {
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi\\ic_logo.png",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\drawable-xhdpi\\ic_logo.png"
     }
 ]

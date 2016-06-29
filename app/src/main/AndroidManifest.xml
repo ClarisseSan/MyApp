@@ -11,24 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".movies.activity.PopularMoviesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pop_movies"
-            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gerry.myapp.MainActivity" />
         </activity>
         <activity
             android:name=".movies.activity.SettingsActivity"
@@ -55,16 +41,19 @@
                 android:value=".movies.activity.PopularMoviesActivity" />
         </activity>
         <activity
-            android:name=".movies.activity.TrailerExampleActivity"
-            android:label="@string/title_activity_trailer_example"
-            android:parentActivityName=".movies.activity.MovieDetailActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".movies.activity.MovieDetailActivity" />
-        </activity>
+            android:name=".movies.carousel.MainCarousel"
+            android:label="@string/title_activity_main_carousel" />
         <activity
-            android:name=".movies.activity.MovieMainActivity"
-            android:label="@string/title_activity_movie_main"></activity>
+            android:name=".movies.activity.SplashScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

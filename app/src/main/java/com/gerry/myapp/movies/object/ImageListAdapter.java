@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gerry.myapp.R;
 import com.squareup.picasso.Picasso;
@@ -27,7 +28,8 @@ public class ImageListAdapter extends ArrayAdapter {
     private List<MovieImage> movieImages;
 
     public ImageListAdapter(Context context, List<String> imageUrls, List<MovieImage> movieImages) {
-        super(context, R.layout.gridview_movie_image, imageUrls);
+       // dito super(context, R.layout.gridview_movie_image, imageUrls);
+        super(context, R.layout.item_movie_poster, imageUrls);
 
         this.context = context;
         this.imageUrls = imageUrls;
@@ -39,16 +41,24 @@ public class ImageListAdapter extends ArrayAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
+        TextView txtName;
+
+        View view;
 
         //check to see if we have a view
         if (convertView == null){
             //no view so create a new one
-            imageView = (ImageView) inflater.inflate(R.layout.gridview_movie_image, parent, false);
+            view = inflater.inflate(R.layout.item_movie_poster,parent,false);
         }else{
             //use the recycled view object
-            imageView = (ImageView) convertView;
+            view = convertView;
         }
 
+        imageView = (ImageView) view.findViewById(R.id.img_movie);
+        txtName = (TextView) view.findViewById(R.id.txt_name);
+
+
+        //set image into image view
 
         Picasso
                 .with(context)
@@ -66,7 +76,13 @@ public class ImageListAdapter extends ArrayAdapter {
                 .error(R.mipmap.error)
                 .into(imageView);
         */
-        return imageView;
+
+
+        //set movie name to textView
+        txtName.setText(movieImages.get(position).getMovie_name());
+
+
+        return view;
     }
 
     public int getCount() {

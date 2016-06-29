@@ -17,24 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.gerry.myapp.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.gerry.myapp.movies.activity.PopularMoviesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pop_movies"
-            android:parentActivityName="com.gerry.myapp.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gerry.myapp.MainActivity" />
         </activity>
         <activity
             android:name="com.gerry.myapp.movies.activity.SettingsActivity"
@@ -61,16 +47,19 @@
                 android:value=".movies.activity.PopularMoviesActivity" />
         </activity>
         <activity
-            android:name="com.gerry.myapp.movies.activity.TrailerExampleActivity"
-            android:label="@string/title_activity_trailer_example"
-            android:parentActivityName="com.gerry.myapp.movies.activity.MovieDetailActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".movies.activity.MovieDetailActivity" />
-        </activity>
+            android:name="com.gerry.myapp.movies.carousel.MainCarousel"
+            android:label="@string/title_activity_main_carousel" />
         <activity
-            android:name="com.gerry.myapp.movies.activity.MovieMainActivity"
-            android:label="@string/title_activity_movie_main" />
+            android:name="com.gerry.myapp.movies.activity.SplashScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

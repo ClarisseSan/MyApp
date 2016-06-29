@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My App</string>
+    <string name="app_name">Pop Movies</string>
     <string name="action_settings">Settings</string>
 
     <string name="nano">My Nanodegree Apps</string>
@@ -37,6 +37,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_trailers">NO TRAILERS AVAILABLE.</string>
     <string name="net">This application requires an internet connection.</string>
+    <string name="title_activity_main_carousel">MainCarousel</string>
+    <string name="no_favorites">No movies added to favorites.</string>
+
+
 
 
 </resources>
