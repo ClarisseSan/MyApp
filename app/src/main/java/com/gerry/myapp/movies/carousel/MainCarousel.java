@@ -44,13 +44,14 @@ public class MainCarousel extends AppCompatActivity {
 
         coverFlow.setAdapter(adapter);
         coverFlow.setOnScrollPositionListener(onScrollListener());
+
     }
 
     private FeatureCoverFlow.OnScrollPositionListener onScrollListener() {
         return new FeatureCoverFlow.OnScrollPositionListener() {
             @Override
             public void onScrolledToPosition(int position) {
-                Log.v("MainActiivty", "position: " + position);
+                Log.v("MainActivity", "position: " + position);
             }
 
             @Override
@@ -61,7 +62,7 @@ public class MainCarousel extends AppCompatActivity {
     }
 
 
-    public JSONArray getFavoriteMovies() throws JSONException {
+    private JSONArray getFavoriteMovies() throws JSONException {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String items = preferences.getString("favorites", "");
         return new JSONArray(items);
@@ -83,7 +84,7 @@ public class MainCarousel extends AppCompatActivity {
 
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject obj = arr.getJSONObject(i);
-                Long movie_id = obj.getLong("movie_id");
+                String movie_id = obj.getString("movie_id");
                 String movie_name = obj.getString("movie_name");
                 String movie_image = obj.getString("movie_image");
                 String movie_overview = obj.getString("movie_overview");
@@ -146,7 +147,7 @@ public class MainCarousel extends AppCompatActivity {
                 System.out.println("FAVORITE MOVIES SIZE---------> " + list.size());
 
                 adapter = new CoverFlowAdapter(this, list);
-                //adapter.setItemList(list);
+                adapter.setItemList(list);
                 adapter.notifyDataSetChanged();
 
             }

@@ -65,6 +65,11 @@ public class TrailerFragment extends Fragment  {
 
 
     private String movieId;
+
+    private static final String LOG_TAG = "Trailer Fragment";
+    private int flagDataType;
+    private Intent intent;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -86,10 +91,24 @@ public class TrailerFragment extends Fragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        intent = getActivity().getIntent();
+
+        if (intent != null) {
+            movieId = intent.getStringExtra("movieId");
+            flagDataType = intent.getIntExtra("flagData",0);
+        }
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             //get movieId from MovieDetailActivity
             movieId = getArguments().getString("movieId");
+            movieTrailersList = getArguments().getParcelableArrayList("trailer_list");
+
+        }
+
+        if(savedInstanceState!=null) {
+            movieId = savedInstanceState.getString("movieId");
+            Log.v("savedInstanceState", "movieid = "+ movieId);
         }
 
         //Check for any issues
@@ -100,6 +119,14 @@ public class TrailerFragment extends Fragment  {
             result.getErrorDialog(getActivity(), 0).show();
         }
 
+        if(flagDataType==0) {
+            //call trailers from API
+            requestMovieTrailer(movieId);
+        }
+        else {
+            Log.v("xxxxxxxx", "trailers not getting from internet");
+        }
+
 
     }
 
@@ -107,9 +134,6 @@ public class TrailerFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trailer_list, container, false);
-
-
-        requestMovieTrailer(movieId);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -142,6 +166,16 @@ public class TrailerFragment extends Fragment  {
 
 
         return view;
+    }
+
+    private void getLocalData() {
+        movieTrailersList = new ArrayList<>();
+        List<Trailer> trailers = intent.getParcelableArrayListExtra("trailers");
+
+        movieTrailersList = trailers;
+        for (Trailer t:movieTrailersList) {
+            System.out.println("TRAILER_URL===========> local" + t.getTrailerNumber());
+        }
     }
 
 
@@ -200,7 +234,7 @@ public class TrailerFragment extends Fragment  {
         final String vid = "/videos";
         String trailer_url = BASE_PATH + id + vid + api_key;
 
-        Log.d("TRAILER URL----------> ", trailer_url);
+        Log.d(LOG_TAG, "TRAILER URL----------> " + trailer_url);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(getActivity());
@@ -273,9 +307,6 @@ public class TrailerFragment extends Fragment  {
         queue.add(stringRequest);
 
         trailerListAdapter = new MyTrailerExampleRecyclerViewAdapter(movieTrailersList,mListener);
-
-
-
     }
 
     public interface ClickListener {

@@ -2,10 +2,8 @@ package com.gerry.myapp.movies.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +17,7 @@ import com.gerry.myapp.movies.object.FavoriteListAdapter;
 import com.gerry.myapp.movies.object.FavoriteMovie;
 import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Trailer;
+import com.gerry.myapp.movies.object.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,8 +79,8 @@ public class FavoritesFragment extends Fragment {
                         .putExtra("overview", mAdapter.getItem(position).getMovie_overview())
                         .putExtra("poster", mAdapter.getItem(position).getMovie_image())
                         .putExtra("duration", mAdapter.getItem(position).getMovie_duration())
-                        .putParcelableArrayListExtra("trailers", (ArrayList<? extends Parcelable>) mAdapter.getItem(position).getMovie_trailerList());
-
+                        .putParcelableArrayListExtra("trailers", (ArrayList<? extends Parcelable>) mAdapter.getItem(position).getMovie_trailerList())
+                .putParcelableArrayListExtra("reviews", (ArrayList<? extends Parcelable>) mAdapter.getItem(position).getReviewsList());
                 startActivity(i);
 
 
@@ -96,13 +95,6 @@ public class FavoritesFragment extends Fragment {
 
 
 
-
-    public JSONArray getFavoriteMovies() throws JSONException {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String items = preferences.getString("favorites", "");
-        return new JSONArray(items);
-    }
-
     private void displayFavoriteMovies() {
 
 
@@ -111,7 +103,7 @@ public class FavoritesFragment extends Fragment {
 
         try {
             // this calls the json
-            JSONArray arr = getFavoriteMovies();
+            JSONArray arr = Utils.getFavoriteMovies(getActivity());
 
             //TODO: check JSON in Jsonlint
             Log.e("xxxxx-add", "called JSON(" + arr.length() + "): " + arr);
@@ -119,7 +111,7 @@ public class FavoritesFragment extends Fragment {
 
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject obj = arr.getJSONObject(i);
-                Long movie_id = obj.getLong("movie_id");
+                String movie_id = obj.getString("movie_id");
                 String movie_name = obj.getString("movie_name");
                 String movie_image = obj.getString("movie_image");
                 String movie_overview = obj.getString("movie_overview");
@@ -135,7 +127,7 @@ public class FavoritesFragment extends Fragment {
                     movieTrailersList = new ArrayList<>();
                     for (int j = 0; j < trailers.length(); j++) {
 
-                        JSONObject trailer = trailers.getJSONObject(i);
+                        JSONObject trailer = trailers.getJSONObject(j);
                         String trailer_num = trailer.getString("trailer_num");
                         String trailer_url = trailer.getString("trailer_url");
 
@@ -153,7 +145,7 @@ public class FavoritesFragment extends Fragment {
                     movieReviewsList = new ArrayList<>();
                     for (int j = 0; j < reviews.length(); j++) {
 
-                        JSONObject reviewObj = reviews.getJSONObject(i);
+                        JSONObject reviewObj = reviews.getJSONObject(j);
 
                         String review_author = reviewObj.getString("review_author");
                         String review_content = reviewObj.getString("review_content");

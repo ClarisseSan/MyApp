@@ -2,9 +2,8 @@ package com.gerry.myapp.movies.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -21,27 +20,37 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.gerry.myapp.R;
-import com.gerry.myapp.movies.fragment.ReviewFragment;
 import com.gerry.myapp.movies.fragment.OverviewFragment;
+import com.gerry.myapp.movies.fragment.ReviewFragment;
 import com.gerry.myapp.movies.fragment.TrailerFragment;
+import com.gerry.myapp.movies.object.Config;
 import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Trailer;
+import com.gerry.myapp.movies.object.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class MovieDetailActivity extends AppCompatActivity implements
         OverviewFragment.OnDetailInteractionListener,
         TrailerFragment.OnListFragmentInteractionListener,
         ReviewFragment.OnListFragmentInteractionListener {
-    private static final String LOG_TAG = "MovieDetailActivity.class" ;
-    short flag;
+    private static final String LOG_TAG = "MovieDetailActivity" ;
+    short flagSave; //on/off for the mark as favorite button
     private String movieId;
     private String movieName;
     private int flagData;
@@ -50,6 +59,21 @@ public class MovieDetailActivity extends AppCompatActivity implements
     private static final String TAG = MovieDetailActivity.class.getSimpleName();
     private ViewPager mViewPager;
     private OverviewFragment detailFragment;
+
+    private String first_trailer_url;
+
+    private String mTitle;
+    private String mYear;
+    private String mDuration;
+    private String mRating;
+    private String mOverview;
+    private String mPoster;
+    private float vote_average;
+
+    private List<Reviews>  reviewList;
+    private List<Trailer> movieTrailersList;
+
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +84,13 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = this.getIntent();
-        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            movieId = intent.getStringExtra(Intent.EXTRA_TEXT);
+        intent = this.getIntent();
+
+        if (intent != null) {
+            movieId = intent.getStringExtra("movieId");
             movieName = intent.getStringExtra("title");
             flagData = intent.getIntExtra("flagData", 0);
+            Toast.makeText(this, LOG_TAG + " MY ID: " + movieId, Toast.LENGTH_SHORT).show();
 
         }
 
@@ -72,31 +98,32 @@ public class MovieDetailActivity extends AppCompatActivity implements
             movieId = savedInstanceState.getString("movieId");
         }
 
+        //set action bar title
         getSupportActionBar().setTitle(movieName);
 
 
-        FragmentManager fm = getSupportFragmentManager();
-
+        //set floating action button
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        checkMovieID();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //if button is clicked
                 //determine the value of flag
-
-                switch (flag) {
+                switch (flagSave) {
                     case 0:
                         //if flag = 0, then highlight the star...
                         fab.setImageResource(R.mipmap.ic_action_fav);
 
                         //add MOVIEID to the list
                         try {
-                            detailFragment.markAsFavorite();
+                            //detailFragment.markAsFavorite();
+                            saveAsFavorite();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        flag = 1;
+                        flagSave = 1;
                         break;
 
                     case 1:
@@ -118,13 +145,13 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
                         // delete MOVIEID from the list
                         try {
-                            removeFromFavorites();
+                            Utils.removeFromFavorites(MovieDetailActivity.this, movieId);
                             Toast.makeText(getApplication(), R.string.fav_remove,
                                     Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        flag = 0;
+                        flagSave = 0;
                         break;
                 }
 
@@ -132,8 +159,8 @@ public class MovieDetailActivity extends AppCompatActivity implements
             }
         });
 
-        checkMovieID();
 
+        //for tab layout
         int numberOfTabs = 3;
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -144,8 +171,390 @@ public class MovieDetailActivity extends AppCompatActivity implements
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+
+
+
+        //request data from moviedb.org using API call
+        if (flagData==0) {
+            requestMovieDetail(movieId);
+            requestMovieTrailer(movieId);
+            requestMovieReviews(movieId);
+        }
+
+        switch (flagData){
+            case 0:
+                requestMovieDetail(movieId);
+                requestMovieTrailer(movieId);
+                requestMovieReviews(movieId);
+                break;
+            case 1:
+                getLocalData();
+        }
+
+
+
     }
 
+    private void getLocalData() {
+        mTitle = intent.getStringExtra("title");
+        mYear = intent.getStringExtra("year");
+        mDuration = intent.getStringExtra("duration");
+        mRating = intent.getStringExtra("rating");
+        vote_average = Float.parseFloat(mRating)/2;
+        mOverview = intent.getStringExtra("overview");
+        mPoster = intent.getStringExtra("poster");
+
+        movieTrailersList = new ArrayList<>();
+        List<Trailer> trailers = intent.getParcelableArrayListExtra("trailers");
+        movieTrailersList = trailers;
+
+        reviewList = new ArrayList<>();
+        List<Reviews> reviews = intent.getParcelableArrayListExtra("reviews");
+        reviewList = reviews;
+    }
+
+    private void saveAsFavorite() throws JSONException {
+
+            //generate JSON(itemlist) so php can process it
+            JSONObject item = new JSONObject();
+            try {
+                item.put("movie_id", movieId);
+                item.put("movie_name", mTitle);
+
+                //save as base64 image
+                try {
+                    item.put("movie_image", Utils.convertImageToBase64(mPoster));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
+                item.put("movie_overview", mOverview);
+                item.put("movie_year", mYear);
+                item.put("movie_date", mYear);
+                item.put("movie_vote", vote_average);
+                item.put("movie_duration", mDuration);
+                item.put("movie_trailers", saveTrailers());
+                item.put("movie_reviews", saveReviews());
+
+
+                int size = saveTrailers().length();
+                System.out.println("TRAILER SIZE " + size);
+
+                //save favoriteMovie in a list
+                Utils.saveFavoriteMovies(this,item);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+    }
+
+    private JSONArray saveReviews(){
+        //generate new JSON Array
+        JSONArray reviews = new JSONArray();
+
+        String trailer_num = " ";
+        String trailer_url = " ";
+
+        //if reviews are available
+
+        if(reviewList.size()!=0){
+            //loop through the trailer list and save each item in the JSONArray
+            for (int i = 0; i < reviewList.size() ; i++) {
+                trailer_num = reviewList.get(i).getAuthor();
+                trailer_url = reviewList.get(i).getContent();
+
+
+                JSONObject reviewObject = new JSONObject();
+                try {
+                    reviewObject.put("review_author", trailer_num);
+                    reviewObject.put("review_content", trailer_url);
+
+                    reviews.put(reviewObject);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }else{
+
+            String author = "No Reviews Available";
+            String content = " ";
+
+            //add to a review object
+            JSONObject reviewObject = new JSONObject();
+            try {
+                reviewObject.put("review_author", author);
+                reviewObject.put("review_content", content);
+
+                reviews.put(reviewObject);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return reviews;
+    }
+
+    private JSONArray saveTrailers(){
+        //generate new JSON Array
+        JSONArray trailers = new JSONArray();
+
+        //loop through the trailer list and save each item in the JSONArray
+        for (int i = 0; i < movieTrailersList.size() ; i++) {
+            String trailer_num = movieTrailersList.get(i).getTrailerNumber();
+            String trailer_url = movieTrailersList.get(i).getTrailerUrl();
+
+
+            JSONObject trailer = new JSONObject();
+            try {
+                trailer.put("trailer_num", trailer_num);
+                trailer.put("trailer_url", trailer_url);
+
+                trailers.put(trailer);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return trailers;
+    }
+
+    private void requestMovieReviews(String movieId){
+        //http://api.themoviedb.org/3/reviews/293660/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
+
+        reviewList = new ArrayList<>();
+
+        final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
+        final String api_key = "?api_key=" + Config.API_KEY;
+        String id = movieId;
+        final String vid = "/reviews";
+        final String reviews_url = BASE_PATH + id + vid + api_key;
+
+        Log.d("TRAILER URL--------> ", reviews_url);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(MovieDetailActivity.this);
+
+
+        // Formulate the request and handle the response.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, reviews_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Do something with the response
+                        System.out.println(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray results = jsonObject.getJSONArray("results");
+
+
+                            if (results!=null){
+
+
+                                for (int i = 0; i < results.length(); i++) {
+
+                                    JSONObject obj = results.getJSONObject(i);
+                                    String author = obj.getString("author");
+                                    String content = obj.getString("content");
+
+                                    Reviews reviews = new Reviews(author, content);
+                                    reviewList.add(reviews);
+
+                                }
+
+                                //==============================LOGS=================================/
+                                if (reviewList!=null){
+                                    for (Reviews review:reviewList) {
+                                        Log.d("AUTHOR: ",String.valueOf(review.getAuthor()));
+                                        Log.d("CONTENT: ",review.getContent());
+                                    }
+                                }
+                                //====================================================================/
+
+                            }
+
+                            if(reviewList.size()==0){
+                               String author = "No Reviews Available";
+                               String content = " ";
+
+                                //add to a review object
+                                Reviews reviews = new Reviews(author, content);
+                                reviewList.add(reviews);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //other catches
+                        if(error instanceof NoConnectionError) {
+                            //show dialog no net connection
+                            Utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                        }
+                    }
+                });
+
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
+    private void requestMovieDetail(String movieId) {
+
+        final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
+        final String api_key = "?api_key=" + Config.API_KEY;
+        String id = movieId;
+
+
+        final String original_url = BASE_PATH + id + api_key;
+        Log.v(LOG_TAG, "ORIGINAL URL >>>>>>>>" + original_url);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(MovieDetailActivity.this);
+
+
+        //generate url for fetching movie poster
+        //1.base path
+        final String IMAGE_BASE_PATH = "http://image.tmdb.org/t/p/";
+        //2. Then you will need a ‘size’, which will be one of the following: "w92", "w154", "w185", "w342", "w500", "w780", or "original"
+        final String image_size = "w185";
+        //3. And finally the poster path returned by the query : movie_image
+
+
+
+        // Formulate the request and handle the response.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, original_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Do something with the response
+                        System.out.println(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            mTitle = jsonObject.getString("title");
+                            mYear = jsonObject.getString("release_date").substring(0, 4);
+                            mDuration = jsonObject.getString("runtime") + "min";
+                            mRating = jsonObject.getString("vote_average") + "/10";
+                            vote_average = Float.parseFloat(jsonObject.getString("vote_average"));
+                            mOverview = jsonObject.getString("overview");
+                            mPoster = IMAGE_BASE_PATH + image_size + jsonObject.getString("poster_path");
+
+
+                            Log.v("TITLE:>>>>>>>>>>>> ", mTitle);
+                            Log.v("mYear:>>>>>>>>>>>> ", mYear);
+                            Log.v("mDuration:>>>>>>>>>>> ", mDuration);
+                            Log.v("mRating:>>>>>>>>>>>>>> ",mRating);
+                            Log.v("mOverview:>>>>>>>>>>>> ",mOverview);
+                            Log.v("mPoster:>>>>>>>>>>>>>> ", mPoster);
+
+                            detailFragment.setValuesOfView(mYear,mDuration,mOverview,vote_average,mPoster);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //other catches
+                        if(error instanceof NoConnectionError) {
+                            //show dialog no net connection
+                            Utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                        }
+                    }
+                });
+
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    private void requestMovieTrailer(final String movieId){
+        //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
+        movieTrailersList = new ArrayList<>();
+
+
+        final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
+        final String api_key = "?api_key=" + Config.API_KEY;
+        String id = movieId;
+        final String vid = "/videos";
+        String trailer_url = BASE_PATH + id + vid + api_key;
+
+        Log.d("TRAILER URL----------> ", trailer_url);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+
+        // Formulate the request and handle the response.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, trailer_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Do something with the response
+                        System.out.println(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray results = jsonObject.getJSONArray("results");
+
+
+                            for (int i = 0; i < results.length(); i++) {
+
+                                JSONObject obj = results.getJSONObject(i);
+                                String trailer_key = obj.getString("key");
+                                //String youtube_trailer = "https://www.youtube.com/watch?v=" + trailer_key;
+                                String youtube_trailer =  trailer_key;
+                                String trailer_num = "Trailer " + (i+1);
+
+                                System.out.println("TRAILER NUMBER --------->" + trailer_num);
+                                System.out.println("TRAILER URL --------->" + youtube_trailer);
+
+                                Trailer trailer = new Trailer(trailer_num, youtube_trailer);
+
+                                //save trailers in a list
+                                movieTrailersList.add(trailer);
+
+                            }
+
+
+                            for (Trailer trailer:movieTrailersList
+                                    ) {
+                                System.out.println("TRAILER NUMBER-----------> " + trailer.getTrailerNumber());
+
+                            }
+
+                            Log.d("Trailer list size SIZE", String.valueOf(movieTrailersList.size()));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //other catches
+                        if(error instanceof NoConnectionError) {
+                            //show dialog no net connection
+                            Utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                        }
+                    }
+                });
+
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -169,7 +578,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
         //attach an intent to this ShareActionProvider. You can update it anytime
         //like when the users select a pice of data they might like to share
         if (mShareActionProvider!=null){
-            mShareActionProvider.setShareIntent(detailFragment.createShareMovieIntent());
+            mShareActionProvider.setShareIntent(createShareMovieIntent());
         }else{
             Log.e(LOG_TAG,"share action provider is null");
         }
@@ -177,42 +586,27 @@ public class MovieDetailActivity extends AppCompatActivity implements
         return true;
     }
 
-    private void removeFromFavorites() throws JSONException {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    public Intent createShareMovieIntent() {
 
-        // Prepare the blank array
-        JSONArray blank = new JSONArray();
-
-        // Get the favorites from preferences
-        String json = preferences.getString("favorites", null);
-
-        JSONArray lines = new JSONArray(json);
-        for (int i = 0; i < lines.length(); i++) {
-            // This is one favorites on the preferences
-            JSONObject line = lines.getJSONObject(i);
-
-            System.out.println("THIS IS A LINE---> " + line);
-
-            String id = line.getString("movie_id");
-            if (!id.equals(movieId)) {
-                blank.put(line);
-            }
+        //first trailer to send at share intent
+        if (movieTrailersList.size()!=0){
+            first_trailer_url = movieName + ": https://www.youtube.com/watch?v=" + movieTrailersList.get(0).getTrailerUrl();
+        }else{
+            //no trailer available, return movie name instead
+            first_trailer_url = movieName;
         }
 
 
-        // At this point, the blank array only contains the favorite movies lines we wanted.
-        // Save it again on the preferences
-        preferences.edit().putString("favorites", blank.toString()).apply();
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        shareIntent.setType("text/plain");
+        String mMovieString = "Check out this movie, " + first_trailer_url;
+        shareIntent.putExtra(Intent.EXTRA_TEXT, mMovieString);
+
+        return shareIntent;
     }
 
 
-    public JSONArray getFavoriteMovies() throws JSONException {
-        //1. initialization of aactivity.... button is not yet clicked
-        //screen shows, determine if movie ID is included in a list of favorite movies
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String items = preferences.getString("favorites", "");
-        return new JSONArray(items);
-    }
 
     private ArrayList<String> getListOfFavMovies() {
 
@@ -220,7 +614,10 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
         try {
             // this calls the json
-            JSONArray arr = getFavoriteMovies();
+            //1. initialization of aactivity.... button is not yet clicked
+            //screen shows, determine if movie ID is included in a list of favorite movies
+
+            JSONArray arr = Utils.getFavoriteMovies(this);
 
 
             Log.e("xxxxx-add", "called(" + arr.length() + "): " + arr);
@@ -249,10 +646,10 @@ public class MovieDetailActivity extends AppCompatActivity implements
         //else  star has no highlight flag = 0
         ArrayList<String> favMovies = getListOfFavMovies();
         if (favMovies.contains(movieId)) {
-            flag = 1;
+            flagSave = 1;
             fab.setImageResource(R.mipmap.ic_action_fav);
         } else {
-            flag = 0;
+            flagSave = 0;
             fab.setImageResource(R.mipmap.ic_action_unfav);
         }
     }
@@ -304,6 +701,16 @@ public class MovieDetailActivity extends AppCompatActivity implements
             //create bundle to pass movieId to the fragments
             Bundle bundle = new Bundle();
             bundle.putString("movieId", movieId);
+            bundle.putString("title",mTitle);
+            bundle.putString("year", mYear);
+            bundle.putString("duration", mDuration);
+            bundle.putString("rating", mRating);
+            bundle.putFloat("vote_ave", vote_average);
+            bundle.putString("overview", mOverview);
+            bundle.putString("poster", mPoster);
+            bundle.putParcelableArrayList("review_list", (ArrayList<? extends Parcelable>) reviewList);
+            bundle.putParcelableArrayList("trailer_list", (ArrayList<? extends Parcelable>) movieTrailersList);
+
             Context context = MovieDetailActivity.this;
 
             if (position == 0) {

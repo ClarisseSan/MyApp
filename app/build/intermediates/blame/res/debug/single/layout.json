@@ -20,10 +20,6 @@
         "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\layout\\item_review.xml"
     },
     {
-        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_blank.xml",
-        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\layout\\fragment_blank.xml"
-    },
-    {
         "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_review_list.xml",
         "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\layout\\fragment_review_list.xml"
     },
@@ -184,12 +180,12 @@
         "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.4.0\\res\\layout\\design_navigation_item_header.xml"
     },
     {
-        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_favor.xml",
-        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\layout\\activity_favor.xml"
-    },
-    {
         "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
         "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_favor.xml",
+        "source": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\src\\main\\res\\layout\\activity_favor.xml"
     },
     {
         "merged": "C:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",

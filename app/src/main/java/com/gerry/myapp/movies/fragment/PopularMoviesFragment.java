@@ -12,12 +12,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.gerry.myapp.R;
-import com.gerry.myapp.api.ApiCall;
-import com.gerry.myapp.api.ApiCallBack;
 import com.gerry.myapp.movies.activity.MovieDetailActivity;
+import com.gerry.myapp.movies.object.Config;
 import com.gerry.myapp.movies.object.ImageListAdapter;
 import com.gerry.myapp.movies.object.MovieImage;
+import com.gerry.myapp.movies.object.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +37,6 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class PopularMoviesFragment extends Fragment {
-
 
     private List<String> movieImages = new ArrayList<String>();
     private ImageListAdapter mAdapter;
@@ -74,15 +80,10 @@ public class PopularMoviesFragment extends Fragment {
 
                 Intent i = new Intent(getActivity(), MovieDetailActivity.class)
                         //pass the selected movie_id to the next Activity
-                        .putExtra(Intent.EXTRA_TEXT, Long.toString(id))
+                        .putExtra("movieId", Long.toString(id))
                         .putExtra("flagData", 0)
                         .putExtra("title", mAdapter.getItem(position).getMovie_name());
-
-
-
                 startActivity(i);
-
-
             }
         });
 
@@ -99,7 +100,8 @@ public class PopularMoviesFragment extends Fragment {
         // We retrieve foreground and background color value as a string
         sortOption = mSharedPreferences.getString(getString(R.string.pref_sort_key),"popular");
 
-        getMovies();
+       // getMovies();
+        requestMovies();
 
 
     }
@@ -112,81 +114,97 @@ public class PopularMoviesFragment extends Fragment {
 
     }
 
-    private void getMovies() {
 
+    private void requestMovies(){
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
         final String sort_order = "popular";
-        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
+        final String api_key = "?api_key=" + Config.API_KEY;;
 
         String original_url = BASE_PATH + sort_order + api_key;
         System.out.println("ORIGINAL URL >>>>>>>>" + original_url);
 
-        // this calls the json
-        new ApiCall(getActivity(), new ApiCallBack() {
-            @Override
-            public void processJson(String json) {
-                try {
-
-                    //loop through the content of that JSON object
-
-                    list = new ArrayList<>();
-
-                    JSONObject jsonObject = new JSONObject(json);
-                    JSONArray results = jsonObject.getJSONArray("results");
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
 
 
-                    for (int i = 0; i < results.length(); i++) {
-                        JSONObject obj = results.getJSONObject(i);
-                        long movie_id = obj.getLong("id");
-                        String movie_name = obj.getString("title");
-                        String movie_image = obj.getString("poster_path");
 
-                        //save the images to a String array
-                        //You will need to append a base path ahead of this relative path to build
-                        //the complete url you will need to fetch the image using Picasso.
+        // Formulate the request and handle the response.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, original_url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Do something with the response
+                        System.out.println(response);
+                        try {
 
-                        //1.base path
-                        final String IMAGE_BASE_PATH = "http://image.tmdb.org/t/p/";
-                        //2. Then you will need a ‘size’, which will be one of the following: "w92", "w154", "w185", "w342", "w500", "w780", or "original"
-                        String image_size = "w185";
-                        //3. And finally the poster path returned by the query : movie_image
+                            //loop through the content of that JSON object
 
-                        String posterPath = IMAGE_BASE_PATH + image_size + movie_image;
+                            list = new ArrayList<>();
 
-
-                        MovieImage movieImage = new MovieImage(movie_id, movie_name,posterPath);
-                        list.add(movieImage);
-                        Log.v("xxxxx-add", "adding movie: " + movie_name);
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray results = jsonObject.getJSONArray("results");
 
 
-                        movieImages.add(posterPath);
+                            for (int i = 0; i < results.length(); i++) {
+                                JSONObject obj = results.getJSONObject(i);
+                                long movie_id = obj.getLong("id");
+                                String movie_name = obj.getString("title");
+                                String movie_image = obj.getString("poster_path");
+
+                                //save the images to a String array
+                                //You will need to append a base path ahead of this relative path to build
+                                //the complete url you will need to fetch the image using Picasso.
+
+                                //1.base path
+                                final String IMAGE_BASE_PATH = "http://image.tmdb.org/t/p/";
+                                //2. Then you will need a ‘size’, which will be one of the following: "w92", "w154", "w185", "w342", "w500", "w780", or "original"
+                                String image_size = "w185";
+                                //3. And finally the poster path returned by the query : movie_image
+
+                                String posterPath = IMAGE_BASE_PATH + image_size + movie_image;
 
 
+                                MovieImage movieImage = new MovieImage(movie_id, movie_name,posterPath);
+                                list.add(movieImage);
+                                Log.v("xxxxx-add", "adding movie: " + movie_name);
+
+                                movieImages.add(posterPath);
+                            }
+
+
+
+                            for (MovieImage img:list) {
+                                Log.d("MOVIE ID: ",String.valueOf(img.getMovie_id()));
+                                Log.d("MOVIE NAME: ",img.getMovie_name());
+                                Log.d("MOVIE IMAGE: ", img.getMovie_image());
+
+                            }
+
+                            int itemCount = movieImages.size();
+                            System.out.println("IMAGE COUNT...>>>>>>>>>" + itemCount);
+
+                            mAdapter.setItemList(list);
+                            mAdapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-
-
-
-                    for (MovieImage img:list) {
-                        Log.d("MOVIE ID: ",String.valueOf(img.getMovie_id()));
-                        Log.d("MOVIE NAME: ",img.getMovie_name());
-                        Log.d("MOVIE IMAGE: ", img.getMovie_image());
-
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //other catches
+                        if(error instanceof NoConnectionError) {
+                            //show dialog no net connection
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
+                        }
                     }
+                });
 
-                    int itemCount = movieImages.size();
-                    System.out.println("IMAGE COUNT...>>>>>>>>>" + itemCount);
 
-                    mAdapter.setItemList(list);
-                    mAdapter.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e("ERROR", e.getMessage());
-                }
-                //URL for fetching all movies
-                // http://api.themoviedb.org/3/movie/popular?api_key=6d369d4e0676612d2d046b7f3e8424bd
-            }
-        }).execute(BASE_PATH + sortOption + api_key);
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
     }
 
     /**

@@ -9,7 +9,7 @@ import java.util.List;
  * Created by gerry on 19/5/16.
  */
 public class Movie implements Parcelable {
-    public long movie_id;
+    public String movie_id;
     public String movie_name;
     public String movie_image;
     String movie_overview;
@@ -20,7 +20,7 @@ public class Movie implements Parcelable {
     List<Reviews> reviewsList;
 
 
-    public Movie(long movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String movie_duration, List<Trailer> trailerList, List<Reviews> reviewsList) {
+    public Movie(String movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String movie_duration, List<Trailer> trailerList, List<Reviews> reviewsList) {
         this.movie_id = movie_id;
         this.movie_name = movie_name;
         this.movie_image = movie_image;
@@ -33,7 +33,7 @@ public class Movie implements Parcelable {
     }
 
     protected Movie(Parcel in) {
-        movie_id = in.readLong();
+        movie_id = in.readString();
         movie_name = in.readString();
         movie_image = in.readString();
         movie_overview = in.readString();
@@ -60,7 +60,7 @@ public class Movie implements Parcelable {
         return 0;
     }
 
-    public void setMovie_id(long movie_id) {
+    public void setMovie_id(String movie_id) {
         this.movie_id = movie_id;
     }
 
@@ -75,9 +75,6 @@ public class Movie implements Parcelable {
         this.trailerList = trailerList;
     }
 
-    public List<Trailer> getTrailerList() {
-        return trailerList;
-    }
 
     public List<Reviews> getReviewsList() {
         return reviewsList;
@@ -119,7 +116,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(movie_id);
+        dest.writeString(movie_id);
         dest.writeString(movie_name);
         dest.writeString(movie_image);
         dest.writeString(movie_overview);
@@ -141,7 +138,7 @@ public class Movie implements Parcelable {
         return movie_overview;
     }
 
-    public long getMovie_id() {
+    public String getMovie_id() {
         return movie_id;
     }
 

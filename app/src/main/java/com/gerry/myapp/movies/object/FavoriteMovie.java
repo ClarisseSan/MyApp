@@ -11,7 +11,7 @@ import java.util.List;
 public class FavoriteMovie extends Movie implements Parcelable {
 
 
-    public FavoriteMovie(long movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String duration, List<Trailer> trailerList,  List<Reviews> reviewList) {
+    public FavoriteMovie(String movie_id, String movie_name, String movie_image, String movie_overview, String movie_date, String movie_vote, String duration, List<Trailer> trailerList,  List<Reviews> reviewList) {
         super(movie_id, movie_name, movie_image, movie_overview, movie_date, movie_vote, duration, trailerList,reviewList);
     }
 

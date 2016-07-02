@@ -19,7 +19,7 @@ public class Trailer implements Parcelable {
 
     protected Trailer(Parcel in) {
         trailer_number = in.readString();
-        trailer_number = in.readString();
+        trailer_url = in.readString();
     }
 
     public static final Creator<Trailer> CREATOR = new Creator<Trailer>() {

@@ -1,6 +1,7 @@
 package com.gerry.myapp.movies.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gerry.myapp.R;
+import com.gerry.myapp.movies.object.Config;
 import com.gerry.myapp.movies.object.MyReviewRecyclerViewAdapter;
 import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Utils;
@@ -40,14 +42,20 @@ public class ReviewFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String LOG_TAG = "ReviewFragment";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
 
     private List<Reviews> movieReviewList;
     private String movieId;
-    RecyclerView recyclerView;
-    MyReviewRecyclerViewAdapter reviewListAdapter;
+    private RecyclerView recyclerView;
+    private MyReviewRecyclerViewAdapter reviewListAdapter;
+    private Intent intent;
+    //if from api or local data
+    //flagDataType = 0 --> from popular movies Activty
+    //flagDataType = 1 --> from favorites activity
+    private int flagDataType;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -70,18 +78,37 @@ public class ReviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        intent = getActivity().getIntent();
+
+        if (intent != null) {
+            movieId = intent.getStringExtra("movieId");
+            flagDataType = intent.getIntExtra("flagData",0);
+        }
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             //get movieId from MovieDetailActivity
             movieId = getArguments().getString("movieId");
+
+            List<Reviews> reviews = getArguments().getParcelableArrayList("review_list");
+            movieReviewList = reviews;
         }
 
         if(savedInstanceState!=null) {
             movieId = savedInstanceState.getString("movieId");
-            Log.v("savedInstanceState", "movieid = "+movieId);
+            Log.v("savedInstanceState", "movieid = "+ movieId);
         }
 
-        Log.v("movieId = ", movieId);
+
+        if(flagDataType==0) {
+            //call trailers from API
+            requestMovieReviews(movieId);
+        }
+        else {
+            Log.v("xxxxxxxx", "trailers not getting from internet");
+        }
+
+
     }
 
     @Override
@@ -95,8 +122,6 @@ public class ReviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_list, container, false);
 
-        //call trailers
-        requestMovieReviews(movieId);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -110,6 +135,17 @@ public class ReviewFragment extends Fragment {
             recyclerView.setAdapter(new MyReviewRecyclerViewAdapter(movieReviewList, mListener));
         }
         return view;
+    }
+
+    private void getLocalData() {
+        movieReviewList = new ArrayList<>();
+        List<Reviews> reviews = intent.getParcelableArrayListExtra("reviews");
+
+        movieReviewList = reviews;
+        for (Reviews r : movieReviewList) {
+            System.out.println("Review===========> " + r.getAuthor());
+        }
+
     }
 
 
@@ -146,14 +182,12 @@ public class ReviewFragment extends Fragment {
     }
 
     private void requestMovieReviews(String movieId){
-
-
         //http://api.themoviedb.org/3/reviews/293660/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
 
         movieReviewList = new ArrayList<>();
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=6d369d4e0676612d2d046b7f3e8424bd";
+        final String api_key = "?api_key=" + Config.API_KEY;
         String id = movieId;
         final String vid = "/reviews";
         final String reviews_url = BASE_PATH + id + vid + api_key;
@@ -181,24 +215,21 @@ public class ReviewFragment extends Fragment {
                                 for (int i = 0; i < results.length(); i++) {
 
                                     JSONObject obj = results.getJSONObject(i);
-                                     author = obj.getString("author");
-                                     content = obj.getString("content");
+                                    author = obj.getString("author");
+                                    content = obj.getString("content");
 
                                     //add to a review object
                                     Reviews reviews = new Reviews(author, content);
                                     movieReviewList.add(reviews);
 
-                                 }
-
-                                //dito
-                                // recyclerView.getAdapter().notifyDataSetChanged();
+                                }
 
                             }
 
                             //==============================LOGS=================================/
 
 
-                           if (movieReviewList!=null){
+                            if (movieReviewList!=null){
                                 for (Reviews review:movieReviewList) {
                                     Log.d("AUTHOR: ",String.valueOf(review.getAuthor()));
                                     Log.d("CONTENT: ",review.getContent());

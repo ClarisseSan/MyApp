@@ -1,4 +1,4 @@
-#Wed Jun 29 20:05:16 SGT 2016
+#Sat Jul 02 22:58:40 SGT 2016
 base.0=C\:\\Users\\isse\\Documents\\projects\\MyApp\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_070fb5293bbb19dd33a392df838024dbd60aca94
 renamed.1=classes.dex
 renamed.0=classes2.dex

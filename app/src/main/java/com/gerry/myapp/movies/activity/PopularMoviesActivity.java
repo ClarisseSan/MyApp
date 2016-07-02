@@ -1,7 +1,9 @@
 package com.gerry.myapp.movies.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -9,6 +11,10 @@ import android.view.MenuItem;
 
 import com.gerry.myapp.R;
 import com.gerry.myapp.movies.carousel.MainCarousel;
+import com.gerry.myapp.movies.object.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class PopularMoviesActivity extends AppCompatActivity {
 
@@ -20,7 +26,6 @@ public class PopularMoviesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -42,9 +47,30 @@ public class PopularMoviesActivity extends AppCompatActivity {
         }
 
         if (id==R.id.action_fav){
-            Intent intent = new Intent(this, MainCarousel.class);
-            startActivity(intent);
+            //if movies are available in the favoriteList
+            //then show FavoritesActivity
+            try {
+                if (getFavoriteMovies().length()>0){
+                    Intent intent = new Intent(this, MainCarousel.class);
+                    startActivity(intent);
+                }else{
+                    //inform user that no movies are added to favorites
+                    Utils.showSuccessDialog(this,R.string.title_activity_favor,R.string.no_favorites).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private JSONArray getFavoriteMovies() throws JSONException {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String items = preferences.getString("favorites", null);
+        JSONArray movies = items!=null ? new JSONArray(items) : new JSONArray();
+        return movies;
+    }
+
 }

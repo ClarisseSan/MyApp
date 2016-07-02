@@ -1,6 +1,11 @@
 package com.gerry.myapp.movies.carousel;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Parcelable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gerry.myapp.R;
+import com.gerry.myapp.movies.activity.MovieDetailActivity;
 import com.gerry.myapp.movies.object.FavoriteMovie;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -59,13 +64,10 @@ public class CoverFlowAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+
         //set movie poster
-        Picasso
-                .with(context)
-                .load(data.get(position).getMovie_image())
-                .fit()
-                .error(R.mipmap.error)
-                .into(viewHolder.gameImage);
+        viewHolder.gameImage.setImageBitmap(decodeBase64Image(position));
+
 
         //set movie name
         viewHolder.gameName.setText(data.get(position).getMovie_name());
@@ -75,14 +77,42 @@ public class CoverFlowAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private Bitmap decodeBase64Image(int position) {
+        byte[] decodedString = Base64.decode(data.get(position).getMovie_image(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        return decodedByte;
+    }
+
     private View.OnClickListener onClickListener(final int position) {
         return new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
               //TODO: add click listener when movie is clicked
+
+                        Intent i = new Intent(context, MovieDetailActivity.class)
+                        //pass the selected movie_id to the next Activity
+                        .putExtra("flagData", 1)
+                        .putExtra("movieId", data.get(position).getMovie_id())
+                        .putExtra("title", data.get(position).getMovie_name())
+                        .putExtra("year", data.get(position).getMovie_date())
+                        .putExtra("rating", data.get(position).getMovie_vote())
+                        .putExtra("overview", data.get(position).getMovie_overview())
+                        .putExtra("poster", data.get(position).getMovie_image())
+                        .putExtra("duration", data.get(position).getMovie_duration())
+                        .putParcelableArrayListExtra("trailers", (ArrayList<? extends Parcelable>) data.get(position).getMovie_trailerList())
+                        .putParcelableArrayListExtra("reviews", (ArrayList<? extends Parcelable>) data.get(position).getReviewsList());
+
+                context.startActivity(i);
+
+
             }
         };
+    }
+
+    public void setItemList(ArrayList<FavoriteMovie> list) {
+        this.data = list;
     }
 
 

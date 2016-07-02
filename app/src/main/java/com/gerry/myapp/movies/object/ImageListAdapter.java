@@ -1,6 +1,9 @@
 package com.gerry.myapp.movies.object;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,9 @@ public class ImageListAdapter extends ArrayAdapter {
 
     private List<String> imageUrls;
     private List<MovieImage> movieImages;
+
+
+
 
     public ImageListAdapter(Context context, List<String> imageUrls, List<MovieImage> movieImages) {
        // dito super(context, R.layout.gridview_movie_image, imageUrls);
@@ -59,7 +65,6 @@ public class ImageListAdapter extends ArrayAdapter {
 
 
         //set image into image view
-
         Picasso
                 .with(context)
                 .load(movieImages.get(position).getMovie_image())
@@ -67,22 +72,22 @@ public class ImageListAdapter extends ArrayAdapter {
                 .error(R.mipmap.error)
                 .into(imageView);
 
-        /*
-        Glide
-                .with(context)
-                .load(movieImages.get(position).getMovie_image())
-                .centerCrop()
-                .crossFade()
-                .error(R.mipmap.error)
-                .into(imageView);
-        */
 
+
+        //imageView.setImageBitmap(decodeBase64Image(position));
 
         //set movie name to textView
         txtName.setText(movieImages.get(position).getMovie_name());
 
 
         return view;
+    }
+
+    private Bitmap decodeBase64Image(int position) {
+        byte[] decodedString = Base64.decode(movieImages.get(position).getMovie_image(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        return decodedByte;
     }
 
     public int getCount() {

@@ -4,30 +4,45 @@
     api-level="22"
     density="tvdpi"
     format="7"
-    timestamp="1280150461647"
+    timestamp="15350336013565"
     token="-2622325183901794429" >
 
     <task
         name="javac"
-        duration="13322" />
+        duration="536" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="6126" />
+        duration="16" />
     <task
         name="verifier"
-        duration="4409" />
+        duration="20" />
 
     <artifact
-        location="C:\Users\isse\Documents\projects\MyApp\app\build\outputs\apk\app-debug.apk"
-        type="MAIN" />
+        location="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+        type="DEX" />
 
-    <build timestamp="1280150461647" >
+    <build timestamp="14391251411768" >
         <artifact
             location="C:\Users\isse\Documents\projects\MyApp\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
+    </build>
+    <build timestamp="14863196367602" >
+        <artifact
+            location="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_8\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="15145088320519" >
+        <artifact
+            location="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_9\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="15350336013565" >
+        <artifact
+            location="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+            type="DEX" />
     </build>
 
 </instant-run>
