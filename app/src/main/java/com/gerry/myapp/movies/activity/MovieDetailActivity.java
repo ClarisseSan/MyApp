@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -70,6 +71,17 @@ public class MovieDetailActivity extends AppCompatActivity implements
     private String mPoster;
     private float vote_average;
 
+
+    private static final String STATE_ID = "movie_id" ;
+    private static final String STATE_DATA = "flagDataType";
+    private static final String STATE_TITLE = "title";
+    private static final String STATE_YEAR = "year";
+    private static final String STATE_DURATION = "duration";
+    private static final String STATE_RATING = "rating";
+    private static final String STATE_VOTE = "vote_ave";
+    private static final String STATE_OVERVIEW = "overview";
+    private static final String STATE_POSTER ="poster" ;
+
     private List<Reviews>  reviewList;
     private List<Trailer> movieTrailersList;
 
@@ -95,7 +107,17 @@ public class MovieDetailActivity extends AppCompatActivity implements
         }
 
         if(savedInstanceState!=null) {
-            movieId = savedInstanceState.getString("movieId");
+            if(savedInstanceState!=null) {
+                movieId = savedInstanceState.getString(STATE_ID);
+                flagData = savedInstanceState.getInt(STATE_DATA);
+                mTitle = savedInstanceState.getString(STATE_TITLE);
+                mYear = savedInstanceState.getString(STATE_YEAR);
+                mDuration = savedInstanceState.getString(STATE_DURATION);
+                mRating = savedInstanceState.getString(STATE_RATING);
+                vote_average = savedInstanceState.getFloat(STATE_VOTE);
+                mOverview = savedInstanceState.getString(STATE_OVERVIEW);
+                mPoster = savedInstanceState.getString(STATE_POSTER);
+            }
         }
 
         //set action bar title
@@ -104,7 +126,16 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
         //set floating action button
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        checkMovieID();
+
+        try {
+            if(Utils.getFavoriteMovies(this)!=null){
+                checkMovieID();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,6 +203,13 @@ public class MovieDetailActivity extends AppCompatActivity implements
         tabLayout.setupWithViewPager(mViewPager);
 
 
+        /*
+        * In revision 4 of the Support Package, a method was added to ViewPager
+        * which allows you to specify the number of offscreen pages to use, rather than the default which is 1.
+        In your case, you want to specify 2, so that when you are on the third page, the first one is not destroyed, and vice-versa.
+        * */
+        mViewPager.setOffscreenPageLimit(2);
+
 
 
         //request data from moviedb.org using API call
@@ -211,6 +249,37 @@ public class MovieDetailActivity extends AppCompatActivity implements
         reviewList = new ArrayList<>();
         List<Reviews> reviews = intent.getParcelableArrayListExtra("reviews");
         reviewList = reviews;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        // Save the current movieID state
+        outState.putString(STATE_ID, movieId);
+        outState.putInt(STATE_DATA, flagData);
+        outState.putString(STATE_TITLE, mTitle);
+        outState.putString(STATE_YEAR, mYear);
+        outState.putString(STATE_DURATION, mDuration);
+        outState.putString(STATE_RATING, mRating);
+        outState.putFloat(STATE_VOTE, vote_average);
+        outState.putString(STATE_OVERVIEW, mOverview);
+        outState.putString(STATE_POSTER, mPoster);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        movieId = savedInstanceState.getString(STATE_ID);
+        flagData = savedInstanceState.getInt(STATE_DATA);
+        mTitle = savedInstanceState.getString(STATE_TITLE);
+        mYear = savedInstanceState.getString(STATE_YEAR);
+        mDuration = savedInstanceState.getString(STATE_DURATION);
+        mRating = savedInstanceState.getString(STATE_RATING);
+        vote_average = savedInstanceState.getFloat(STATE_VOTE);
+        mOverview = savedInstanceState.getString(STATE_OVERVIEW);
+        mPoster = savedInstanceState.getString(STATE_POSTER);
+
     }
 
     private void saveAsFavorite() throws JSONException {
@@ -619,19 +688,19 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
             JSONArray arr = Utils.getFavoriteMovies(this);
 
+                Log.e("xxxxx-add", "called(" + arr.length() + "): " + arr);
 
-            Log.e("xxxxx-add", "called(" + arr.length() + "): " + arr);
 
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    Long movie_id = obj.getLong("movie_id");
+                    String movie_name = obj.getString("movie_name");
+                    list.add(String.valueOf(movie_id));
+                    Log.d("xxxxx-add", "adding movie: " + movie_name);
+                }
 
-            for (int i = 0; i < arr.length(); i++) {
-                JSONObject obj = arr.getJSONObject(i);
-                Long movie_id = obj.getLong("movie_id");
-                String movie_name = obj.getString("movie_name");
-                list.add(String.valueOf(movie_id));
-                Log.d("xxxxx-add", "adding movie: " + movie_name);
-            }
+                System.out.println("FAVORITES SIZE---------> " + list.size());
 
-            System.out.println("FAVORITES SIZE---------> " + list.size());
 
         } catch (JSONException e) {
             e.printStackTrace();

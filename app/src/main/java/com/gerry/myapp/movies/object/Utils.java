@@ -61,7 +61,7 @@ public class Utils {
 
     public static JSONArray getFavoriteMovies(Context context) throws JSONException {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String items = preferences.getString(FAVORITES, null);
+        String items = preferences.getString(FAVORITES, "");
         return new JSONArray(items);
     }
 

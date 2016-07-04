@@ -82,13 +82,8 @@ public class FavoritesFragment extends Fragment {
                         .putParcelableArrayListExtra("trailers", (ArrayList<? extends Parcelable>) mAdapter.getItem(position).getMovie_trailerList())
                 .putParcelableArrayListExtra("reviews", (ArrayList<? extends Parcelable>) mAdapter.getItem(position).getReviewsList());
                 startActivity(i);
-
-
             }
         });
-
-
-
         return rootView;
     }
 

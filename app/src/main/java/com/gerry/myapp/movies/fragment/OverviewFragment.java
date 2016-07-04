@@ -29,6 +29,14 @@ public class OverviewFragment extends Fragment {
     //variables for sharing
     private static final String LOG_TAG = "OverviewFragment";
     private static final String STATE_ID = "movie_id" ;
+    private static final String STATE_DATA = "flagDataType";
+    private static final String STATE_TITLE = "title";
+    private static final String STATE_YEAR = "year";
+    private static final String STATE_DURATION = "duration";
+    private static final String STATE_RATING = "rating";
+    private static final String STATE_VOTE = "vote_ave";
+    private static final String STATE_OVERVIEW = "overview";
+    private static final String STATE_POSTER ="poster" ;
 
     private String movieId;
 
@@ -97,11 +105,18 @@ public class OverviewFragment extends Fragment {
         }
 
         if(savedInstanceState!=null) {
-            movieId = savedInstanceState.getString("movieId");
-            mPoster = savedInstanceState.getString("mPoster");
-            flagDataType= savedInstanceState.getInt("flagDataType");
+            movieId = savedInstanceState.getString(STATE_ID);
+            flagDataType = savedInstanceState.getInt(STATE_DATA);
+            mTitle = savedInstanceState.getString(STATE_TITLE);
+            mYear = savedInstanceState.getString(STATE_YEAR);
+            mDuration = savedInstanceState.getString(STATE_DURATION);
+            mRating = savedInstanceState.getString(STATE_RATING);
+            vote_average = savedInstanceState.getFloat(STATE_VOTE);
+            mOverview = savedInstanceState.getString(STATE_OVERVIEW);
+            mPoster = savedInstanceState.getString(STATE_POSTER);
         }
 
+        setRetainInstance(true);
 
         //for allowing access in movie poster
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -114,8 +129,10 @@ public class OverviewFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setValuesOfView(mYear, mDuration, mOverview, vote_average, mPoster);
-
     }
+
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -123,21 +140,16 @@ public class OverviewFragment extends Fragment {
         super.onSaveInstanceState(outState);
         // Save the current movieID state
         outState.putString(STATE_ID, movieId);
-        outState.putString("mPoster", mPoster);
-        outState.putInt("flagDataType", flagDataType);
+        outState.putInt(STATE_DATA, flagDataType);
+        outState.putString(STATE_TITLE, mTitle);
+        outState.putString(STATE_YEAR, mYear);
+        outState.putString(STATE_DURATION, mDuration);
+        outState.putString(STATE_RATING, mRating);
+        outState.putFloat(STATE_VOTE, vote_average);
+        outState.putString(STATE_OVERVIEW, mOverview);
+        outState.putString(STATE_POSTER, mPoster);
     }
 
-
-    private void setValuesOfViewLocalData() {
-
-        txtYear.setText(mYear);
-        txtDuration.setText(mDuration);
-        txtDescription.setText(mOverview);
-        ratingBar.setRating(vote_average);
-
-        //set movie poster
-        imgPoster.setImageBitmap(Utils.decodeBase64Image(mPoster));
-     }
 
 
 
