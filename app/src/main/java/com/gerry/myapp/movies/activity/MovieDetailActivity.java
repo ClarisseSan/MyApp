@@ -117,6 +117,14 @@ public class MovieDetailActivity extends AppCompatActivity implements
                 vote_average = savedInstanceState.getFloat(STATE_VOTE);
                 mOverview = savedInstanceState.getString(STATE_OVERVIEW);
                 mPoster = savedInstanceState.getString(STATE_POSTER);
+
+
+                //for screen size support
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.movie_detail_container, new OverviewFragment())
+                        .add(R.id.movie_detail_container1, new OverviewFragment())
+                        .commit();
+
             }
         }
 
@@ -228,6 +236,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
             case 1:
                 getLocalData();
         }
+
 
 
 

@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".movies.fragment.FavoritesFragment"
-        tools:showIn="@layout/activity_popular_movies"
+        tools:showIn="@layout/activity_main"
         android:background="@color/colorB6">
 
      <GridView
