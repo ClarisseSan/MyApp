@@ -158,7 +158,7 @@ public class PopularMoviesFragment extends Fragment {
                                 //1.base path
                                 final String IMAGE_BASE_PATH = "http://image.tmdb.org/t/p/";
                                 //2. Then you will need a ‘size’, which will be one of the following: "w92", "w154", "w185", "w342", "w500", "w780", or "original"
-                                String image_size = "w185";
+                                String image_size = "w342";
                                 //3. And finally the poster path returned by the query : movie_image
 
                                 String posterPath = IMAGE_BASE_PATH + image_size + movie_image;

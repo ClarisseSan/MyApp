@@ -156,7 +156,7 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_overview, container, false);
+        View rootView = inflater.inflate(R.layout.cardview, container, false);
 
         //Movie Release Year
          txtYear = (TextView) rootView.findViewById(R.id.txt_year);

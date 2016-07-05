@@ -36,6 +36,7 @@
     <color name="unselected_text_color">#727272</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="mdl_cardview_image_top_description_color">#212121</color>
 
 
 </resources>

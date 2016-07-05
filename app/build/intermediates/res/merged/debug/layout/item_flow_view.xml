@@ -21,8 +21,4 @@
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
-
-
-
-
 </FrameLayout>
