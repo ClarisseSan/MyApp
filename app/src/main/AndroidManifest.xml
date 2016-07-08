@@ -14,8 +14,7 @@
             android:name=".movies.activity.PopularMoviesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pop_movies"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".movies.activity.SettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -42,7 +41,7 @@
         </activity>
         <activity
             android:name=".movies.carousel.MainCarousel"
-            android:label="@string/title_activity_main_carousel" />
+            android:label="@string/title_activity_favor" />
         <activity
             android:name=".movies.activity.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -53,6 +52,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".movies.masterdetail.PosterListActivity"
+            android:label="@string/pop_movies"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".movies.masterdetail.PosterDetailActivity"
+            android:label="@string/pop_movies"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".movies.masterdetail.PosterListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gerry.myapp.movies.masterdetail.PosterListActivity" />
         </activity>
     </application>
 

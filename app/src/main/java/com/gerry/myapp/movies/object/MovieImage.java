@@ -8,8 +8,8 @@ import android.os.Parcelable;
  */
 public class MovieImage implements Parcelable{
     public long movie_id;
-    String movie_name;
-    String movie_image;
+    public String movie_name;
+    public String movie_image;
 
     public MovieImage(long movie_id, String movie_name, String movie_image) {
         this.movie_id = movie_id;

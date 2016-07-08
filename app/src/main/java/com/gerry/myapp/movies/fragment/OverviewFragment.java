@@ -1,7 +1,6 @@
 package com.gerry.myapp.movies.fragment;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -26,7 +25,7 @@ import java.util.List;
  */
 public class OverviewFragment extends Fragment {
 
-    //variables for sharing
+
     private static final String LOG_TAG = "OverviewFragment";
     private static final String STATE_ID = "movie_id" ;
     private static final String STATE_DATA = "flagDataType";
@@ -71,7 +70,6 @@ public class OverviewFragment extends Fragment {
     private int flagDataType;
 
     private Intent intent;
-    private OnDetailInteractionListener mListener; // this is the activity
 
     public OverviewFragment() {
         setHasOptionsMenu(true);
@@ -85,7 +83,6 @@ public class OverviewFragment extends Fragment {
         intent = getActivity().getIntent();
 
         if (intent != null) {
-            movieId = intent.getStringExtra(Intent.EXTRA_TEXT);
             flagDataType = intent.getIntExtra("flagData",0);
            }
 
@@ -156,7 +153,7 @@ public class OverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.cardview, container, false);
+        View rootView = inflater.inflate(R.layout.item_overview, container, false);
 
         //Movie Release Year
          txtYear = (TextView) rootView.findViewById(R.id.txt_year);
@@ -197,8 +194,10 @@ public class OverviewFragment extends Fragment {
                 Glide
                         .with(getContext())
                         .load(mPoster)
-                        .centerCrop()
-                        .error(R.mipmap.error)
+                        .placeholder(R.drawable.ic_loading)
+                        .fitCenter()
+                        .error(R.drawable.ic_error)
+                        .crossFade()
                         .into(imgPoster);
                 break;
             case 1:
@@ -211,24 +210,6 @@ public class OverviewFragment extends Fragment {
     }
 
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnDetailInteractionListener) {
-            mListener = (OnDetailInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-
-
-
-    public interface OnDetailInteractionListener {
-        public void markAsFavorite();
-    }
 }
 
 

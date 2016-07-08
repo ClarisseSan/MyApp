@@ -1,9 +1,7 @@
 package com.gerry.myapp.movies.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,11 +14,9 @@ import com.gerry.myapp.movies.fragment.TrailerFragment;
 import com.gerry.myapp.movies.object.Trailer;
 import com.gerry.myapp.movies.object.Utils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 
 public class PopularMoviesActivity extends AppCompatActivity  implements
-        OverviewFragment.OnDetailInteractionListener,
         TrailerFragment.OnListFragmentInteractionListener{
 
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
@@ -33,12 +29,15 @@ public class PopularMoviesActivity extends AppCompatActivity  implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         /**
          * To know what case it is, have your MainActivity check whether or not the layout
          * contains a view with the id weather_detail_container. If it does, it’s a two pane
          * layout so set mTwoPane to true, otherwise you can set it to false. Also, if it’s a
          * two pane layout, you’ll need to add a new DetailFragment
          * */
+
+         /*
 
         if (findViewById(R.id.movie_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
@@ -57,6 +56,7 @@ public class PopularMoviesActivity extends AppCompatActivity  implements
         } else {
             mTwoPane = false;
         }
+        */
 
     }
 
@@ -86,7 +86,7 @@ public class PopularMoviesActivity extends AppCompatActivity  implements
             //if movies are available in the favoriteList
             //then show FavoritesActivity
             try {
-                if (getFavoriteMovies().length()>0){
+                if (Utils.getFavoriteMovies(this).length()>0){
                     Intent intent = new Intent(this, MainCarousel.class);
                     startActivity(intent);
                 }else{
@@ -102,18 +102,6 @@ public class PopularMoviesActivity extends AppCompatActivity  implements
         return super.onOptionsItemSelected(item);
     }
 
-    private JSONArray getFavoriteMovies() throws JSONException {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String items = preferences.getString("favorites", null);
-        JSONArray movies = items!=null ? new JSONArray(items) : new JSONArray();
-        return movies;
-    }
-
-
-    @Override
-    public void markAsFavorite() {
-
-    }
 
     @Override
     public void onListFragmentInteraction(Trailer trailer) {

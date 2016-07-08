@@ -1,0 +1,150 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:fillViewport="true"
+android:layout_centerVertical="true"
+    android:background="@color/colorB6"
+tools:context="com.gerry.myapp.movies.masterdetail.PosterDetailFragment">
+
+<LinearLayout
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/img_movie"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/txt_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="12dp"
+            android:shadowColor="#000"
+            android:shadowDx="0.5"
+            android:shadowDy="0"
+            android:shadowRadius="2"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/mdl_cardview_title_size"
+            android:hint="year"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorWhite"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="5dp"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/txt_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="120min"
+            android:layout_marginLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/colorB3"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:numStars="5"
+            android:id="@+id/ratingBar"
+            android:theme="@style/RatingBar"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/colorB5"/>
+
+        <TextView
+            android:id="@+id/txt_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/mdl_cardview_image_top_description_color"
+            android:textSize="@dimen/mdl_cardview_description_size"
+            android:hint="overview"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/colorB5"/>
+
+    <TextView
+        android:id="@+id/txt_trailer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp"
+        android:text="@string/trailers"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+
+    <include layout="@layout/fragment_trailer_list" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/colorB5"/>
+
+    <TextView
+        android:id="@+id/txt_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="6dp"
+        android:text="@string/reviews"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <include layout="@layout/fragment_review_list" />
+
+
+
+</LinearLayout>
+</ScrollView>

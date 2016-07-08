@@ -39,8 +39,10 @@
     <string name="net">This application requires an internet connection.</string>
     <string name="title_activity_main_carousel">MainCarousel</string>
     <string name="no_favorites">No movies added to favorites.</string>
-
-
+        <string name="title_poster_list">Posters</string>
+    <string name="title_poster_detail">Poster Detail</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
 
 
 </resources>

@@ -32,6 +32,7 @@ import com.gerry.myapp.R;
 import com.gerry.myapp.movies.fragment.OverviewFragment;
 import com.gerry.myapp.movies.fragment.ReviewFragment;
 import com.gerry.myapp.movies.fragment.TrailerFragment;
+import com.gerry.myapp.movies.masterdetail.PosterDetailFragment;
 import com.gerry.myapp.movies.object.Config;
 import com.gerry.myapp.movies.object.Reviews;
 import com.gerry.myapp.movies.object.Trailer;
@@ -47,8 +48,7 @@ import java.util.List;
 
 
 public class MovieDetailActivity extends AppCompatActivity implements
-        OverviewFragment.OnDetailInteractionListener,
-        TrailerFragment.OnListFragmentInteractionListener,
+       TrailerFragment.OnListFragmentInteractionListener,
         ReviewFragment.OnListFragmentInteractionListener {
     private static final String LOG_TAG = "MovieDetailActivity" ;
     short flagSave; //on/off for the mark as favorite button
@@ -107,7 +107,6 @@ public class MovieDetailActivity extends AppCompatActivity implements
         }
 
         if(savedInstanceState!=null) {
-            if(savedInstanceState!=null) {
                 movieId = savedInstanceState.getString(STATE_ID);
                 flagData = savedInstanceState.getInt(STATE_DATA);
                 mTitle = savedInstanceState.getString(STATE_TITLE);
@@ -118,15 +117,25 @@ public class MovieDetailActivity extends AppCompatActivity implements
                 mOverview = savedInstanceState.getString(STATE_OVERVIEW);
                 mPoster = savedInstanceState.getString(STATE_POSTER);
 
-
+                /*
                 //for screen size support
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.movie_detail_container, new OverviewFragment())
-                        .add(R.id.movie_detail_container1, new OverviewFragment())
+                        .commit();
+                        */
+
+
+                //create bundle to pass movieId to the fragments
+                Bundle bundle = generateBundle();
+
+                PosterDetailFragment fragment = new PosterDetailFragment();
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction()
+                        .add(R.id.poster_detail_container, fragment)
                         .commit();
 
-            }
         }
+
 
         //set action bar title
         getSupportActionBar().setTitle(movieName);
@@ -156,7 +165,6 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
                         //add MOVIEID to the list
                         try {
-                            //detailFragment.markAsFavorite();
                             saveAsFavorite();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -220,13 +228,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
 
 
-        //request data from moviedb.org using API call
-        if (flagData==0) {
-            requestMovieDetail(movieId);
-            requestMovieTrailer(movieId);
-            requestMovieReviews(movieId);
-        }
-
+        //request data from moviedb.org using API call or from shared preferences
         switch (flagData){
             case 0:
                 requestMovieDetail(movieId);
@@ -235,9 +237,8 @@ public class MovieDetailActivity extends AppCompatActivity implements
                 break;
             case 1:
                 getLocalData();
+                break;
         }
-
-
 
 
     }
@@ -330,22 +331,22 @@ public class MovieDetailActivity extends AppCompatActivity implements
         //generate new JSON Array
         JSONArray reviews = new JSONArray();
 
-        String trailer_num = " ";
-        String trailer_url = " ";
+        String author = " ";
+        String content = " ";
 
         //if reviews are available
 
         if(reviewList.size()!=0){
             //loop through the trailer list and save each item in the JSONArray
             for (int i = 0; i < reviewList.size() ; i++) {
-                trailer_num = reviewList.get(i).getAuthor();
-                trailer_url = reviewList.get(i).getContent();
+                author = reviewList.get(i).getAuthor();
+                content = reviewList.get(i).getContent();
 
 
                 JSONObject reviewObject = new JSONObject();
                 try {
-                    reviewObject.put("review_author", trailer_num);
-                    reviewObject.put("review_content", trailer_url);
+                    reviewObject.put("review_author", author);
+                    reviewObject.put("review_content", content);
 
                     reviews.put(reviewObject);
 
@@ -354,10 +355,13 @@ public class MovieDetailActivity extends AppCompatActivity implements
                 }
 
             }
-        }else{
+        }
 
-            String author = "No Reviews Available";
-            String content = " ";
+
+        if(reviewList.size()==0){
+
+             author = "No Reviews Available";
+             content = " ";
 
             //add to a review object
             JSONObject reviewObject = new JSONObject();
@@ -373,6 +377,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
         }
 
 
+        Log.d(LOG_TAG, "NUMBER OF REVIEWS: %%%%%%%%%%%%%%%" + reviewList.size());
         return reviews;
     }
 
@@ -504,7 +509,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
         //1.base path
         final String IMAGE_BASE_PATH = "http://image.tmdb.org/t/p/";
         //2. Then you will need a ‘size’, which will be one of the following: "w92", "w154", "w185", "w342", "w500", "w780", or "original"
-        final String image_size = "w185";
+        final String image_size = "w500";
         //3. And finally the poster path returned by the query : movie_image
 
 
@@ -738,10 +743,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
     }
 
-    @Override
-    public void markAsFavorite() {
 
-    }
 
     @Override
     public void onListFragmentInteraction(Reviews review) {
@@ -777,23 +779,14 @@ public class MovieDetailActivity extends AppCompatActivity implements
         public Fragment getItem(int position) {
             Fragment fragment = null;
             //create bundle to pass movieId to the fragments
-            Bundle bundle = new Bundle();
-            bundle.putString("movieId", movieId);
-            bundle.putString("title",mTitle);
-            bundle.putString("year", mYear);
-            bundle.putString("duration", mDuration);
-            bundle.putString("rating", mRating);
-            bundle.putFloat("vote_ave", vote_average);
-            bundle.putString("overview", mOverview);
-            bundle.putString("poster", mPoster);
-            bundle.putParcelableArrayList("review_list", (ArrayList<? extends Parcelable>) reviewList);
-            bundle.putParcelableArrayList("trailer_list", (ArrayList<? extends Parcelable>) movieTrailersList);
+            Bundle bundle = generateBundle();
 
             Context context = MovieDetailActivity.this;
 
             if (position == 0) {
                 fragment = Fragment.instantiate(context, OverviewFragment.class.getName(), bundle);
                 detailFragment = (OverviewFragment) fragment;
+                detailFragment.setArguments(bundle);
             }
             if (position == 1) {
                 fragment = Fragment.instantiate(context, TrailerFragment.class.getName(), bundle);
@@ -804,6 +797,22 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
             return fragment;
         }
+    }
+
+    private Bundle generateBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putString("movieId", movieId);
+        bundle.putString("title",mTitle);
+        bundle.putString("year", mYear);
+        bundle.putString("duration", mDuration);
+        bundle.putString("rating", mRating);
+        bundle.putFloat("vote_ave", vote_average);
+        bundle.putString("overview", mOverview);
+        bundle.putString("poster", mPoster);
+        bundle.putParcelableArrayList("review_list", (ArrayList<? extends Parcelable>) reviewList);
+        bundle.putParcelableArrayList("trailer_list", (ArrayList<? extends Parcelable>) movieTrailersList);
+
+        return bundle;
     }
 
 }

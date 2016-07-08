@@ -39,8 +39,9 @@ import java.util.List;
 public class PopularMoviesFragment extends Fragment {
 
     private List<String> movieImages = new ArrayList<String>();
-    private ImageListAdapter mAdapter;
     private ArrayList<MovieImage> list;
+    private ImageListAdapter mAdapter;
+
 
     private SharedPreferences mSharedPreferences;
     String sortOption;
@@ -102,7 +103,6 @@ public class PopularMoviesFragment extends Fragment {
 
        // getMovies();
         requestMovies();
-
 
     }
 

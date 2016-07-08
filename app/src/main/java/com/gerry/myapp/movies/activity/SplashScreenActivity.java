@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.gerry.myapp.R;
+import com.gerry.myapp.movies.masterdetail.PosterListActivity;
 
 
 /*
@@ -52,12 +53,12 @@ public class SplashScreenActivity extends Activity {
                 try {
                     int waited = 0;
                     // Splash screen pause time
-                    while (waited < 3500) {
+                    while (waited < 3000) {
                         sleep(100);
                         waited += 100;
                     }
                     Intent intent = new Intent(SplashScreenActivity.this,
-                            PopularMoviesActivity.class);
+                            PosterListActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                     startActivity(intent);
                     SplashScreenActivity.this.finish();
