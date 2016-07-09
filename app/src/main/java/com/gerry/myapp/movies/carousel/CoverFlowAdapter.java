@@ -89,7 +89,6 @@ public class CoverFlowAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-              //TODO: add click listener when movie is clicked
 
                         Intent i = new Intent(context, MovieDetailActivity.class)
                         //pass the selected movie_id to the next Activity

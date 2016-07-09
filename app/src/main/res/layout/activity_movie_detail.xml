@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="com.gerry.myapp.movies.activity.MovieDetailActivity"
+    tools:ignore="MergeRootFrame"
     >
 
     <android.support.design.widget.AppBarLayout

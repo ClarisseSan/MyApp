@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar" />
 
+
     <include layout="@layout/activity_poster_list" />
 
 

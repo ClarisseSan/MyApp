@@ -109,6 +109,7 @@ public class PosterDetailFragment extends Fragment {
 
 
     private int mColumnCount = 1;
+    private Intent intent;
 
 
     /**
@@ -122,10 +123,11 @@ public class PosterDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        intent = getActivity().getIntent();
         //this is the bundle from MovieDetailActivity
         if (getArguments() != null) {
             //get movieId from MovieDetailActivity
+            flagDataType = getArguments().getInt("flagData",0);
             movieId = getArguments().getString("movieId");
             mTitle = getArguments().getString("title");
             mYear = getArguments().getString("year");
@@ -172,16 +174,38 @@ public class PosterDetailFragment extends Fragment {
             result.getErrorDialog(getActivity(), 0).show();
         }
 
-        if(flagDataType==0) {
-            //call from API
-            requestMovieDetail(movieId);
-            requestMovieTrailer(movieId);
-            requestMovieReviews(movieId);
-        }
-        else {
-            Log.v("xxxxxxxx", "trailers not getting from internet");
+        //request data from moviedb.org using API call or from shared preferences
+        switch (flagDataType){
+            case 0:
+                requestMovieDetail(movieId);
+                requestMovieTrailer(movieId);
+                requestMovieReviews(movieId);
+                break;
+            case 1:
+                getLocalData();
+                break;
         }
 
+    }
+
+    private void getLocalData() {
+        flagDataType = intent.getIntExtra("flagData",0);
+
+        mTitle = intent.getStringExtra("title");
+        mYear = intent.getStringExtra("year");
+        mDuration = intent.getStringExtra("duration");
+        mRating = intent.getStringExtra("rating");
+        vote_average = Float.parseFloat(mRating)/2;
+        mOverview = intent.getStringExtra("overview");
+        mPoster = intent.getStringExtra("poster");
+
+        movieTrailersList = new ArrayList<>();
+        List<Trailer> trailers = intent.getParcelableArrayListExtra("trailers");
+        movieTrailersList = trailers;
+
+        movieReviewList = new ArrayList<>();
+        List<Reviews> reviews = intent.getParcelableArrayListExtra("reviews");
+        movieReviewList = reviews;
     }
 
     private void requestMovieReviews(String movieId) {
@@ -472,9 +496,6 @@ public class PosterDetailFragment extends Fragment {
             setReviewRecyclerView(reviewRecvyclerView);
 
         }
-
-
-
 
 
         return rootView;

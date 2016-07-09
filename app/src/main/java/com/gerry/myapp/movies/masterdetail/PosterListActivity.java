@@ -48,7 +48,7 @@ import java.util.List;
  * An activity representing a list of Posters. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link PosterDetailActivity} representing
+ * lead to a {@link MovieDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
@@ -344,13 +344,12 @@ public class PosterListActivity extends AppCompatActivity {
                     .with(context)
                     .load(movieImages.get(position).getMovie_image())
                     .fit()
-                    .error(R.mipmap.error)
+                    .error(R.drawable.ic_error)
+                    .placeholder(R.drawable.ic_loading)
                     .into(holder.mImageView);
 
             //set movie name to textView
             holder.mTitleView.setText(movieImages.get(position).getMovie_name());
-
-
 
 
             holder.mView.setOnClickListener(new View.OnClickListener() {

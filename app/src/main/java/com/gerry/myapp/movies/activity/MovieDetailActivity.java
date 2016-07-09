@@ -104,6 +104,8 @@ public class MovieDetailActivity extends AppCompatActivity implements
             flagData = intent.getIntExtra("flagData", 0);
             Toast.makeText(this, LOG_TAG + " MY ID: " + movieId, Toast.LENGTH_SHORT).show();
 
+           // getLocalData();
+
         }
 
         if(savedInstanceState!=null) {
@@ -117,22 +119,32 @@ public class MovieDetailActivity extends AppCompatActivity implements
                 mOverview = savedInstanceState.getString(STATE_OVERVIEW);
                 mPoster = savedInstanceState.getString(STATE_POSTER);
 
-                /*
-                //for screen size support
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.movie_detail_container, new OverviewFragment())
-                        .commit();
-                        */
 
+            // savedInstanceState is non-null when there is fragment state
+            // saved from previous configurations of this activity
+            // (e.g. when rotating the screen from portrait to landscape).
+            // In this case, the fragment will automatically be re-added
+            // to its container so we don't need to manually add it.
+            // For more information, see the Fragments API guide at:
+            //
+            // http://developer.android.com/guide/components/fragments.html
+            //
 
+            //TODO: create two pane layout
                 //create bundle to pass movieId to the fragments
                 Bundle bundle = generateBundle();
 
                 PosterDetailFragment fragment = new PosterDetailFragment();
                 fragment.setArguments(bundle);
-                getFragmentManager().beginTransaction()
+
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+
+            getFragmentManager().beginTransaction()
                         .add(R.id.poster_detail_container, fragment)
                         .commit();
+
+
 
         }
 
@@ -801,6 +813,7 @@ public class MovieDetailActivity extends AppCompatActivity implements
 
     private Bundle generateBundle() {
         Bundle bundle = new Bundle();
+        bundle.putInt("flagData", flagData);
         bundle.putString("movieId", movieId);
         bundle.putString("title",mTitle);
         bundle.putString("year", mYear);

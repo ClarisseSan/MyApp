@@ -57,15 +57,6 @@
             android:name=".movies.masterdetail.PosterListActivity"
             android:label="@string/pop_movies"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".movies.masterdetail.PosterDetailActivity"
-            android:label="@string/pop_movies"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".movies.masterdetail.PosterListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gerry.myapp.movies.masterdetail.PosterListActivity" />
-        </activity>
     </application>
 
 </manifest>

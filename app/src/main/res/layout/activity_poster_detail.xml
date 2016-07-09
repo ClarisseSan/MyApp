@@ -3,5 +3,4 @@
     android:id="@+id/poster_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gerry.myapp.movies.masterdetail.PosterDetailActivity"
     tools:ignore="MergeRootFrame" />
