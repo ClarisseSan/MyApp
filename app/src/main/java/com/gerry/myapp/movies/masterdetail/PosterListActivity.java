@@ -83,7 +83,7 @@ public class PosterListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
+        //set progress bar
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         // Set the progress status zero on each button click
