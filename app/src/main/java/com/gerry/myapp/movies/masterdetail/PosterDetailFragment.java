@@ -309,8 +309,6 @@ public class PosterDetailFragment extends Fragment {
 
     private void requestMovieTrailer(String movieId) {
 
-
-
         movieTrailersList = new ArrayList<>();
 
 

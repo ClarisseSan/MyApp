@@ -10,17 +10,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".movies.activity.PopularMoviesActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/pop_movies"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
         <activity
             android:name=".movies.activity.SettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_settings"
             android:parentActivityName=".movies.activity.PopularMoviesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
             android:name=".movies.activity.MovieDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -31,6 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".movies.activity.PopularMoviesActivity" />
         </activity>
+
+
         <activity
             android:name=".movies.activity.FavorActivity"
             android:label="@string/title_activity_favor"
@@ -39,9 +46,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".movies.activity.PopularMoviesActivity" />
         </activity>
+
+
         <activity
             android:name=".movies.carousel.MainCarousel"
             android:label="@string/title_activity_favor" />
+
+
         <activity
             android:name=".movies.activity.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

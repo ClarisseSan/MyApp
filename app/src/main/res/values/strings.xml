@@ -29,7 +29,7 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="no_trailers">NO TRAILERS AVAILABLE.</string>
+    <string name="no_trailers">No trailers available.</string>
     <string name="net">This application requires an internet connection.</string>
     <string name="title_activity_main_carousel">MainCarousel</string>
     <string name="no_favorites">No movies added to favorites.</string>

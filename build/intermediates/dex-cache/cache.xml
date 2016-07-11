@@ -2,148 +2,256 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="false"
         revision="23.0.3"
         sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.4.0_b0d425c40711db9dff302afd91d4c8768cc6fa93\classes.dex" />
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.4.0_b0d425c40711db9dff302afd91d4c8768cc6fa93.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\isse\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_6e25ef5bdf0d440d3e77d384faa0ce8c5359ef08\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.volley\volley\1.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.volley-volley-1.0.0_acaac081ce587e4ecccc584be94ad065bae18fae\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.4.0_3b8c20971ce1911d6d1489c15a2704c4f1e19679\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.github.moondroid.coverflow\library\1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="42dd7a8aa383b6967e640be8149e11b8ada22944">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.moondroid.coverflow-library-1.0_fb1ff2f19f36563b83da313b2645218be62c0f54\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.4.0_caa98d8c189df339e3b53351b363744a42018209\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.4.0_7549ef703fd0971ef11e52bb852c536c53c09b1c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-23.4.0_816f7859c0cadb19ec78e024ba248ec2bad19af6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\picasso-2.5.2_cc5af79b208bf2522b60d1f1abeb5d1be859fad4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="e73a331779efb00e1ba62c93121d90c57ef8ebbf">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_070fb5293bbb19dd33a392df838024dbd60aca94\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.4.0_915f8978a1965483baca3affb1a16cfd5ef02d5c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="08f0648769f89924adcf6b06a10df8e324f2f1ce">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_fe8ceb01496918b930e22c0cd5e8963ee09b0866\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="false"
-        revision="23.0.3"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.4.0_08af446640b1e240fa4e80747569744e4a99aba5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
         optimize="false"
         revision="23.0.3"
         sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.4.0_e36247f0b12efc547b2f4f10f899075dc80e871e\classes.dex" />
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.4.0_e36247f0b12efc547b2f4f10f899075dc80e871e.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.support-appcompat-v7-23.4.0_caa98d8c189df339e3b53351b363744a42018209.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\support-annotations-23.4.0_3b8c20971ce1911d6d1489c15a2704c4f1e19679.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\picasso-2.5.2_cc5af79b208bf2522b60d1f1abeb5d1be859fad4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.github.moondroid.coverflow\library\1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="42dd7a8aa383b6967e640be8149e11b8ada22944">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.github.moondroid.coverflow-library-1.0_fb1ff2f19f36563b83da313b2645218be62c0f54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\glide-3.7.0_6e25ef5bdf0d440d3e77d384faa0ce8c5359ef08.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.support-support-v4-23.4.0_b0d425c40711db9dff302afd91d4c8768cc6fa93.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.4.0_7549ef703fd0971ef11e52bb852c536c53c09b1c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.support-animated-vector-drawable-23.4.0_7549ef703fd0971ef11e52bb852c536c53c09b1c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\support-annotations-23.4.0_3b8c20971ce1911d6d1489c15a2704c4f1e19679.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.github.moondroid.coverflow\library\1.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="42dd7a8aa383b6967e640be8149e11b8ada22944">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.github.moondroid.coverflow-library-1.0_fb1ff2f19f36563b83da313b2645218be62c0f54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.volley\volley\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.volley-volley-1.0.0_acaac081ce587e4ecccc584be94ad065bae18fae.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.4.0_caa98d8c189df339e3b53351b363744a42018209.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.volley\volley\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.volley-volley-1.0.0_acaac081ce587e4ecccc584be94ad065bae18fae.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\internal_impl-23.4.0_915f8978a1965483baca3affb1a16cfd5ef02d5c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\glide-3.7.0_6e25ef5bdf0d440d3e77d384faa0ce8c5359ef08.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\internal_impl-23.4.0_915f8978a1965483baca3affb1a16cfd5ef02d5c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\picasso-2.5.2_cc5af79b208bf2522b60d1f1abeb5d1be859fad4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.support-support-vector-drawable-23.4.0_e36247f0b12efc547b2f4f10f899075dc80e871e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.support-recyclerview-v7-23.4.0_08af446640b1e240fa4e80747569744e4a99aba5.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="C:\Users\isse\Documents\projects\MyApp\app\libs\YouTubeAndroidPlayerApi.jar"
-        jumboMode="true"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="3c4f96ff493456651cc7bdb0b47e10eb25545a16">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\YouTubeAndroidPlayerApi_5a4aee42dbd511d6563a580c258d011051913ef8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.support-cardview-v7-23.4.0_816f7859c0cadb19ec78e024ba248ec2bad19af6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\libs\YouTubeAndroidPlayerApi.jar"
+        jumboMode="false"
         optimize="false"
         revision="23.0.3"
         sha1="3c4f96ff493456651cc7bdb0b47e10eb25545a16">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\2\YouTubeAndroidPlayerApi_5a4aee42dbd511d6563a580c258d011051913ef8\classes.dex" />
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\YouTubeAndroidPlayerApi_5a4aee42dbd511d6563a580c258d011051913ef8.jar" />
     </item>
     <item
-        is-multidex="true"
+        is-multidex="false"
         jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
-        jumboMode="true"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\release\com.android.support-design-23.4.0_442775740913e235f6df7808cf7421664a7c3b94.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
+        jumboMode="false"
         optimize="false"
         revision="23.0.3"
         sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
-        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.4.0_442775740913e235f6df7808cf7421664a7c3b94\classes.dex" />
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.4.0_442775740913e235f6df7808cf7421664a7c3b94.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.4.0_816f7859c0cadb19ec78e024ba248ec2bad19af6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="false"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="C:\Users\isse\Documents\projects\MyApp\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.4.0_08af446640b1e240fa4e80747569744e4a99aba5.jar" />
     </item>
 
 </items>
